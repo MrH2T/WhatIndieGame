@@ -1,0 +1,8 @@
+bin/
+src/WhatIndieGames/.vs/
+src/WhatIndieGames/x64/
+src/WhatIndieGames/WhatIndieGames
+
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
