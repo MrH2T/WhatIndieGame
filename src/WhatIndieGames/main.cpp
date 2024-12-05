@@ -166,7 +166,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     case WM_DESTROY:
-        gameEscape(hWnd, wParam, lParam);
+        GameManager::getInstance().gameEscape();
         PostQuitMessage(0);
         break;
     default:
@@ -320,11 +320,6 @@ void keyUp(HWND hWnd, WPARAM wParam, LPARAM lParam)
         break;
     }
 }
-void gameEscape(HWND hWnd, WPARAM wParam, LPARAM lParam) {
-
-
-    PostQuitMessage(0);
-}
 
 void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
 
@@ -362,6 +357,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("MENU_BOX_CHOOSE",bitmap(MENU_BOX_CHOOSE_BMP));
     rs.loadResource("MENU_BOX_STATE",bitmap(MENU_BOX_STATE_BMP));
     rs.loadResource("MENU_BOX_INVENTORY",bitmap(MENU_BOX_INVENTORY_BMP));
+    rs.loadResource("MAINMENU_BANNER",bitmap(MAINMENU_BANNER_BMP));
 
     
 #pragma endregion
@@ -431,7 +427,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             Canvas::getInstance().getObject("Pause_Menu_Exit").switchState(DRAW_VISIBLE, 0);
             if (GameManager::getInstance().globalVar["PAUSE_MENU_SELECT"] == 1) {
                 GameManager::getInstance().goMainMenu();
-                gameEscape(hWnd,wParam,lParam);
+                //gameEscape(hWnd,wParam,lParam);
             }
             else {
                 EventManager::getInstance().emit("GAME_RESUME");
@@ -689,7 +685,8 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             if (GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] != GAME_STATE_COMMON)return;
             if (GameManager::getInstance().globalVar[GLOBAL_BATTLE_PREPARING])return;
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
-                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            
+            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
             //ent->setDirection(DIRECTION_RIGHT);
             ent->setSpeedX(SPEED);
             //ent->setStatus(ENTITY_WALKING);
@@ -698,28 +695,32 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
         EventManager::getInstance().subscribe("DOWN_STOP", "Player_DOWNKEY", [&]() {
             if (GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] != GAME_STATE_COMMON)return;
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
-                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;           
+            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
             ent->setSpeedY(0);
             //ent->setStatus(ENTITY_STATIC);
             });
         EventManager::getInstance().subscribe("LEFT_STOP", "Player_LEFTKEY", [&]() {
             if (GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] != GAME_STATE_COMMON)return;
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
-                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            
+            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
             ent->setSpeedX(0);
             //ent->setStatus(ENTITY_STATIC);
             });
         EventManager::getInstance().subscribe("UP_STOP", "Player_UPKEY", [&]() {
             if (GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] != GAME_STATE_COMMON)return;
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
-                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            
+            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
             ent->setSpeedY(0);
             //ent->setStatus(ENTITY_STATIC);
             });
         EventManager::getInstance().subscribe("RIGHT_STOP", "Player_RIGHTKEY", [&]() {
             if (GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] != GAME_STATE_COMMON)return;
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
-                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+                || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            
+            Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
             ent->setSpeedX(0);
             //ent->setStatus(ENTITY_STATIC);
             });
@@ -760,7 +761,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     //    }
     //    });
 
-    GameManager::getInstance().setRoom(ROOM_MAINMENU);
+    GameManager::getInstance().setRoom(ROOM_MAINMENU,GAME_STATE_MAINMENU);
 
     SetTimer(hWnd, TIMER_GAMETIMER, TIMER_GAMETIMER_ELAPSE, NULL);
 

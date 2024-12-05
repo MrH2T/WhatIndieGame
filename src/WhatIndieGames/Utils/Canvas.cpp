@@ -186,7 +186,14 @@ void Canvas::deleteObject(std::string identifier) {
 //}
 //get object
 DrawableObject& Canvas::getObject(std::string identifier) {
-	if (contents.find(identifier) == contents.end())MessageBoxA(NULL, "FUCK", "FUCK", MB_ICONEXCLAMATION);
+	if (contents.find(identifier) == contents.end())
+	{
+		FILE* dbg = NULL;
+		fopen_s(&dbg, "debug.txt", "a");
+		fprintf(dbg, "%s\n", identifier.c_str());
+		fclose(dbg);
+		MessageBoxA(NULL, "FUCK111", "FUCK", MB_ICONEXCLAMATION);
+	}
 	return contents[identifier];
 }
 //clear all objs

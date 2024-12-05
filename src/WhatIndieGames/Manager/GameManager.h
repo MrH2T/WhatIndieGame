@@ -43,7 +43,7 @@ public:
 	bool checkWalkable(std::string identifier, int x, int y, RECT c_box);
 	void updateEntityPositions();
 
-	void goMainMenu(){}
+	void goMainMenu();
 	void addEntity(std::string entname, Entity* ent);
 	void deleteEntity(std::string entname);
 	Entity* getEntity(std::string entname);
@@ -71,9 +71,13 @@ public:
 
 	void gameSaving();
 
-	void readSaving();
+	bool readSaving();
 
 	void gameOver();
+
+	void newGame();
+	void helpRoom();
+	void gameEscape();
 
 private:
 	Room* curRoom;

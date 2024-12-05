@@ -160,8 +160,8 @@ void Room_Test::roomInit() {
         GameManager::getInstance().setRoom(ROOM_TEST_1); }, 1);
     addEntity("Portal",portal);
 
-    GameManager::getInstance().savingVar[GLOBAL_PLAYER_MAXHP] = 10;
-    GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] = GameManager::getInstance().savingVar[GLOBAL_PLAYER_MAXHP];
+    //GameManager::getInstance().savingVar[GLOBAL_PLAYER_MAXHP] = 10;
+    //GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] = GameManager::getInstance().savingVar[GLOBAL_PLAYER_MAXHP];
 
     GameManager::getInstance().addItem("¹ÖÎïÌÇ¹û");
 

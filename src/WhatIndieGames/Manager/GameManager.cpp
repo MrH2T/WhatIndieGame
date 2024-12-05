@@ -208,9 +208,9 @@ void GameManager::gameSaving() {
 	saving.close();
 }
 
-void GameManager::readSaving(){
+bool GameManager::readSaving(){
 	std::ifstream saving("saving.txt");
-	if (!saving.good())return;
+	if (!saving.good())return false;
 	int rmid = 0;
 	saving >> rmid;
 	for (int i = 0; i < 8; i++) {
@@ -227,9 +227,31 @@ void GameManager::readSaving(){
 	saving.close();
 	globalVar[ROOM_ENTRANCE] = ROOM_ENTRY_SAVING;
 	setRoom(rmid);
+	return true;
 }
 
 void GameManager::gameOver() {
 	setRoom(ROOM_GAMEOVER,GAME_STATE_CUTSCENE);
 
+}
+void GameManager::goMainMenu() {
+	AudioManager::getInstance().stopBgm();
+	setRoom(ROOM_MAINMENU,GAME_STATE_MAINMENU);
+}
+void GameManager::newGame() {
+	globalVar[GLOBAL_PLAYER_HP]=savingVar[GLOBAL_PLAYER_MAXHP] = 20;
+	savingVar[GLOBAL_PLAYER_GOLD] = 0;
+	savingVar[GLOBAL_PLAYER_ATK] = 5;
+	savingVar[GLOBAL_PLAYER_DEF] = 5;
+	savingVar[GLOBAL_PLAYER_EXP] = 0;
+	savingVar[GLOBAL_PLAYER_LV] = 0;
+	
+	setRoom(ROOM_TEST);
+}
+
+void GameManager::helpRoom() {
+	newGame();
+}
+void GameManager::gameEscape() {
+	PostQuitMessage(0);
 }

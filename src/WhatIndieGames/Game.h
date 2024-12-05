@@ -42,4 +42,3 @@ void hideMenu();
 void timerTick(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void keyUp(HWND hWnd, WPARAM wParam, LPARAM lParam);
 void keyDown(HWND hWnd, WPARAM wParam, LPARAM lParam);
-void gameEscape(HWND hWnd, WPARAM wParam, LPARAM lParam);
