@@ -40,6 +40,7 @@ public:
 	Room_Mainmenu();
 	~Room_Mainmenu();
 	virtual void roomInit();
+	virtual void roomUpdate();
 };
 
 

@@ -25,7 +25,7 @@ void GameManager::gameUpdate() {
 		Battle::getInstance().battleUpdate();
 	}
 
-
+	if (curRoom != NULL)curRoom->roomUpdate();
 	runWaiting();
 }
 bool GameManager::checkWalkable(std::string identifier, int x, int y, RECT c_box) {

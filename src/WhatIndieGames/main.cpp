@@ -358,6 +358,9 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("MENU_BOX_STATE",bitmap(MENU_BOX_STATE_BMP));
     rs.loadResource("MENU_BOX_INVENTORY",bitmap(MENU_BOX_INVENTORY_BMP));
     rs.loadResource("MAINMENU_BANNER",bitmap(MAINMENU_BANNER_BMP));
+    rs.loadResource("MAINMENU_NIKO",bitmap(MAINMENU_NIKO_BMP));
+    rs.loadResource("MAINMENU_PURPLELIGHTS", bitmap(MAINMENU_PURPLELIGHTS_BMP));
+    rs.loadResource("MAINMENU_BACKGROUND", bitmap(MAINMENU_BACKGROUND_BMP));
 
     
 #pragma endregion
@@ -373,7 +376,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("SND_ATTACK", "Resource/Audio/snd_attack.wav", 1);
     am.loadAudio("SND_ENEMYHIT", "Resource/Audio/snd_enemyhit.wav", 1);
     am.loadAudio("SND_ITEMUSE", "Resource/Audio/snd_itemuse.wav", 1);
-    am.loadAudio("SND_ITEMUSE", "Resource/Audio/snd_saving.wav", 1);
+    am.loadAudio("SND_SAVING", "Resource/Audio/snd_saving.wav", 1);
 
     am.loadAudio("BGM_SANS", "Resource/Audio/bgm_sans.wav");
     am.loadAudio("BGM_SNOWTOWN", "Resource/Audio/bgm_snowtown.wav");

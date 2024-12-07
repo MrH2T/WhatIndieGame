@@ -106,10 +106,14 @@ void Entity::setSpeedX(int vx) {
 void Entity::setSpeedY(int vy) {
 	v_y = vy;
 }
-void Entity::setPos(Coord pos) {
+void Entity::setPos(Coord pos,bool force) {
 	pos_x = pos.x;
 	pos_y = pos.y;
-	updatePosition();
+	if(!force)updatePosition();
+	if (force) {
+		Canvas::getInstance().getObject(draw_obj).posX = pos_x,
+			Canvas::getInstance().getObject(draw_obj).posY = pos_y;
+	}
 }
 void Entity::setDirection(int dir) {
 	if (dir != direction) {

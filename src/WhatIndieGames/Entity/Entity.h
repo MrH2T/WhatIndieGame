@@ -39,7 +39,7 @@ public:
 	void setVisible(bool vis = 0);
 	void setDirection(int dir);
 	void setPassable(bool pass);
-	void setPos(Coord pos);
+	void setPos(Coord pos,bool force=0);
 	void setDrawYPrioBias(int ypriobias);
 	//type0:react, type1:collide
 	void setReaction(std::function<void()> react_func,int type);

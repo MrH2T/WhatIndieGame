@@ -6,3 +6,4 @@ src/WhatIndieGames/WhatIndieGames
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
+debug.txt
