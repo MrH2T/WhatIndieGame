@@ -5,6 +5,21 @@
 #include"../Utils/Canvas.h"
 #include<codecvt>
 
+std::function<bool()> chgLine(int bid, int posL, int posR, int from, int to) {
+	return [=]() {
+		int _bid = bid, _posL = posL, _posR = posR, _from = from, _to = to;
+		auto me = Battle::getInstance().getCurAttack().getBullet(_bid);
+		if (me.id == 0)return false;
+		if (me.pos == _to)return false;
+		if (me.posY >= _posL && me.posY < _posR&& me.pos == _from)
+		{
+			Battle::getInstance().getCurAttack().moveBullet(_bid, _from, _to, me.posY - 10);
+			return true;
+		}
+
+		return false;
+		};
+}
 
 Battle::Attack::Bullet::Bullet() {
 	id=speed = damage = length = 0;
@@ -98,11 +113,12 @@ void Battle::Attack::updateBulletDraw(Bullet& bul) {
 	buldraw.expandBox = { 0,0,60,
 		std::min( 
 			bul.length+std::min(0,bul.posY),
-			std::max(0,BATTLE_BOX_HEIGHT - std::max(0,bul.posY)))};
+			std::max(0,BATTLE_BOX_HEIGHT-10 - std::max(0,bul.posY)))};
 }
 void Battle::Attack::updateBullets() {
-	curTime++;
 	static bool checker = 0;
+	if (curTime == 0)checker = 0;
+	curTime++;
 	if (curBul >= bullets.size()) {
 		bool flag = 1;
 		for (int i = 0; i < 3; i++)if (!bullet_going[i].empty())flag = 0;
@@ -188,7 +204,7 @@ void Battle::Attack::clearBullets() {
 	}
 }
 Battle::Attack::Bullet Battle::Attack::getBullet(int id) {
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 3; i++) {
 		for (auto bl : bullet_going[i]) {
 			if (bl.id == id) {
 				return bl;
@@ -254,7 +270,7 @@ void Battle::battleSysInit() {
 	cv.addObject("Battle_HPBar",
 		DrawableObject(
 			Text(L"", RGB(255, 255, 255), RGB(0, 0, 0), L"SimSun",23,0,TEXT_BOLD),
-			WINDOW_WIDTH-250, BATTLE_DIALOG_BOX_Y + BATTLE_DIALOG_BOX_HEIGHT, { 0,0,140,30 }, 7, DRAW_ABSOLUTE
+			WINDOW_WIDTH-250, BATTLE_DIALOG_BOX_Y + BATTLE_DIALOG_BOX_HEIGHT, { 0,0,200,30 }, 7, DRAW_ABSOLUTE
 		));
 
 
@@ -583,14 +599,14 @@ void Battle::useMercy() {
 		battleFinish(BATTLE_MERCY);
 	}
 	else {
-		switchState(BATTLE_DIALOG);
+		switchState(BATTLE_DESCRI);
 		ConversationSequence::getInstance().setSequence(ConvSeq({
 			[=]() {
 				Conversation::getInstance().beginConversation(Text(L"* 似乎现在还不能饶恕它。"));
 			},
 			[]() {
 				ConversationSequence::getInstance().stopBattleConv();
-				Battle::getInstance().switchState(BATTLE_BULLET);
+				Battle::getInstance().switchState(BATTLE_DIALOG);
 			}
 			}));
 		ConversationSequence::getInstance().startBattleConv();

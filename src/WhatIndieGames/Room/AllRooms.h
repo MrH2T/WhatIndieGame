@@ -9,6 +9,7 @@
 #define ROOM_GAMEOVER 1919810
 
 #define ROOM_MAINMENU 1
+#define ROOM_HELP	2
 
 
 class Room_Test :public Room{
@@ -41,6 +42,12 @@ public:
 	~Room_Mainmenu();
 	virtual void roomInit();
 	virtual void roomUpdate();
+};
+class Room_Help : public Room {
+public:
+	Room_Help();
+	~Room_Help();
+	virtual void roomInit();
 };
 
 

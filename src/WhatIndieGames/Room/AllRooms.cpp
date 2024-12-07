@@ -11,6 +11,8 @@ Room* getRoom(int roomid) {
 		return new Room_Gameover();
 	case ROOM_MAINMENU:
 		return new Room_Mainmenu();
+	case ROOM_HELP:
+		return new Room_Help();
 	}
 	return NULL;
 }

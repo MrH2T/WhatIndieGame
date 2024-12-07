@@ -43,8 +43,7 @@
 #define ENEMY_DRAWOBJ "BattleEnemyDrawobj"
 #define PLAYER_DRAWOBJ "BattlePlayerDrawobj"
 
-
-//typedef std::vector < std::function<void()>> ConvSeq;
+std::function<bool()> chgLine(int bid,int posL,int posR,int from,int to);
 
 const int BATTLE_STRIP_POS[3] = { BATTLE_BOX_X + 7 ,BATTLE_BOX_X +7 + 63 ,BATTLE_BOX_X + 7 + 63 + 63 };
 const int BATTLE_BUTTON_POS[4][2] = { {25,WINDOW_HEIGHT - 80-32},{25 + 171 + 50,WINDOW_HEIGHT - 80-32},

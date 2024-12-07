@@ -239,10 +239,12 @@ void GameManager::goMainMenu() {
 	setRoom(ROOM_MAINMENU,GAME_STATE_MAINMENU);
 }
 void GameManager::newGame() {
+	inventory.clear();
+
 	globalVar[GLOBAL_PLAYER_HP]=savingVar[GLOBAL_PLAYER_MAXHP] = 20;
 	savingVar[GLOBAL_PLAYER_GOLD] = 0;
-	savingVar[GLOBAL_PLAYER_ATK] = 5;
-	savingVar[GLOBAL_PLAYER_DEF] = 5;
+	savingVar[GLOBAL_PLAYER_ATK] = 2;
+	savingVar[GLOBAL_PLAYER_DEF] = 0;
 	savingVar[GLOBAL_PLAYER_EXP] = 0;
 	savingVar[GLOBAL_PLAYER_LV] = 0;
 	
@@ -250,7 +252,16 @@ void GameManager::newGame() {
 }
 
 void GameManager::helpRoom() {
-	newGame();
+	inventory.clear();
+
+	globalVar[GLOBAL_PLAYER_HP] = savingVar[GLOBAL_PLAYER_MAXHP] = 100;
+	savingVar[GLOBAL_PLAYER_GOLD] = 0;
+	savingVar[GLOBAL_PLAYER_ATK] = 2;
+	savingVar[GLOBAL_PLAYER_DEF] = 0;
+	savingVar[GLOBAL_PLAYER_EXP] = 0;
+	savingVar[GLOBAL_PLAYER_LV] = 0;
+
+	setRoom(ROOM_HELP);
 }
 void GameManager::gameEscape() {
 	PostQuitMessage(0);

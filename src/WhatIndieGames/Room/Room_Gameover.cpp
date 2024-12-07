@@ -32,7 +32,10 @@ void Room_Gameover::roomInit() {
         });
     ev.subscribe("Z_PRESS", "GameoverRoomZ", [&]() {
         if (localVar["choice"] == 0) {
-            GameManager::getInstance().readSaving();
+            if (!GameManager::getInstance().readSaving())
+            {
+                GameManager::getInstance().newGame();
+            }
         }
         else if (localVar["choice"] == 1) {
             GameManager::getInstance().setRoom(ROOM_MAINMENU);
@@ -42,6 +45,7 @@ void Room_Gameover::roomInit() {
 }
 Room_Gameover::~Room_Gameover() {
     clearEntities();
+    AudioManager::getInstance().stopBgm("BGM_GAMEOVER");
     auto& cv = Canvas::getInstance();
     auto& ev = EventManager::getInstance();
     cv.deleteObject("background_room_gameover");
