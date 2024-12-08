@@ -52,7 +52,8 @@ void Room_Help::roomInit() {
             GameManager::getInstance().globalVar[GLOBAL_BATTLE_PREPARING] = 0;
             BattleController::getInstance().setProcess([=]()
                 {
-                    AudioManager::getInstance().stopBgm(), AudioManager::getInstance().playSound("BGM_BATTLE", true);
+                    AudioManager::getInstance().stopBgm();
+                     AudioManager::getInstance().playSound("BGM_BATTLE", true);
                     auto& bt = Battle::getInstance();
                     auto& ev = EventManager::getInstance();
 
@@ -121,11 +122,11 @@ void Room_Help::roomInit() {
                                 }));
                         }
                         else if (turn == 3) {
-                            bt.setAttack(Battle::Attack({
-                                {10,Bul(1,10,1,1,10,chgLine(1,200,210,1,0))},{30,Bul(2,10,1,1,10,chgLine(2,200,210,1,2))},
-                                {50,Bul(3,10,0,1,10,chgLine(3,200,210,0,1))},{70,Bul(4,10,2,1,10,chgLine(4,200,210,2,1))},
-                                {90,Bul(5,10,0,1,10,chgLine(5,200,210,0,2))},{110,Bul(6,10,2,1,10,chgLine(6,200,210,2,0))},
-                                {130,Bul(7,10,0,1,10,chgLine(7,200,210,0,2))},{150,Bul(8,10,2,1,10,chgLine(8,200,210,2,0))}
+                            bt.setAttack(Battle::Attack({{10,Bul(1,10,1,1)}
+                                //{10,Bul(1,10,1,1,10,chgLine(1,200,210,1,0))},{30,Bul(2,10,1,1,10,chgLine(2,200,210,1,2))},
+                                //{50,Bul(3,10,0,1,10,chgLine(3,200,210,0,1))},{70,Bul(4,10,2,1,10,chgLine(4,200,210,2,1))},
+                                //{90,Bul(5,10,0,1,10,chgLine(5,200,210,0,2))},{110,Bul(6,10,2,1,10,chgLine(6,200,210,2,0))},
+                                //{130,Bul(7,10,0,1,10,chgLine(7,200,210,0,2))},{150,Bul(8,10,2,1,10,chgLine(8,200,210,2,0))}
                                 }));
                         }
                         else if (turn == 4) {
@@ -189,6 +190,54 @@ void Room_Help::roomInit() {
     npcmanF->setVisible(true);
     addEntity("SANB", npcmanF);
 
+    Entity* npcman = new Entity("NPC", 300, 670, { 0,30,23 * 2,30 * 2 }, { 0, 0, 23 * 2,30 * 2 },
+        animsF, {
+        Animation(allanim4F.getFrame(0),4,1,4,23,30),
+        Animation(allanim4F.getFrame(1),4,1,4,23,30),
+        Animation(allanim4F.getFrame(2),4,1,4,23,30),
+        Animation(allanim4F.getFrame(3),4,1,4,23,30),
+        });
+    npcman->setVisible(true);
+    npcman->setReaction([&]() {
+        if (GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;
+        Animation sansface = Animation(ResourceManager::getInstance().getResource("SANS_FACE"), 1, 1, 1, 32, 30);
+        ConversationSequence::getInstance().setSequence(ConvSeq({
+            [=]() {
+                AudioManager::getInstance().playSound("SND_SANS_SPEAK",false);
+                Conversation::getInstance().beginConversation(Text(L"* wanna some ketchup?",RGB(255,255,255),RGB(0,0,0),L"Comic Sans MS",40),sansface); },
+            [=]() {Conversation::getInstance().beginConversation(
+
+                Conversation::Choice(ChoiceItem({
+                    Text(L"Yes",RGB(255,255,255),RGB(0,0,0),L"Determination Regular",40),
+                    Text(L"No",RGB(255,255,255),RGB(0,0,0),L"Determination Regular",40)
+                    }),[](int res) {GameManager::getInstance().globalVar["Choose_Temp"] = res + 1; })
+            ); },
+            [=]() {
+                AudioManager::getInstance().playSound("SND_SANS_SPEAK",false);
+                if (GameManager::getInstance().globalVar["Choose_Temp"] == 1) {
+                    Conversation::getInstance().beginConversation(Text(L"* here you are.", RGB(255, 255, 255), RGB(0, 0, 0), L"Comic Sans MS", 40),sansface);
+                }
+                else if (GameManager::getInstance().globalVar["Choose_Temp"] == 2) {
+                    Conversation::getInstance().beginConversation(Text(L"* pity.", RGB(255, 255, 255), RGB(0, 0, 0), L"Comic Sans MS", 40),
+                        Animation(ResourceManager::getInstance().getResource("SANS_CLOSEEYE"), 1, 1, 1, 32, 30));
+                }
+            },
+            [=]() {
+                if (GameManager::getInstance().globalVar["Choose_Temp"] == 1) {
+                    Conversation::getInstance().beginConversation(Text(L"* (You drink the ketchup. )", 0xffffff, 0x000000, L"Determination Regular", 40));
+                }
+                else ConversationSequence::getInstance().stopConversation();
+                GameManager::getInstance().globalVar.erase("Choose_Temp");
+            },
+            [=]() {
+                 Conversation::getInstance().beginConversation(Text(L"* (The sweetness fills you with determination. )", 0xffffff, 0x000000, L"Determination Regular", 40));
+               }
+            }
+        ));
+        ConversationSequence::getInstance().startConversation();
+        }, 0);
+    npcman->setDirection(DIRECTION_DOWN);
+    addEntity("npc", npcman);
 
     Entity* airwallTop = new Entity("AirwallTop", 0, MAIN_PLAYER_HEIGHT-30, { 0,0,width,10 }, false),
         * airwallLeft = new Entity("AirwallLeft", -10, 0, { 0,0,10,height }, false),
@@ -199,6 +248,12 @@ void Room_Help::roomInit() {
     addEntity("AirwallBottom", airwallBottom);
     addEntity("AirwallRight", airwallRight);
 
+    Entity* house = new Entity("House", 350,490, { 0,100,256,236 }, { 0,0, 256,236 },
+        Animation(ResourceManager::getInstance().getResource("HOUSE"), 1, 1, 1, 128, 118));
+    house->setVisible(true);
+    house->setDrawYPrioBias(100);
+    addEntity("House", house);
+   
 
     //GameManager::getInstance().savingVar[GLOBAL_PLAYER_MAXHP] = 10;
     //GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] = GameManager::getInstance().savingVar[GLOBAL_PLAYER_MAXHP];

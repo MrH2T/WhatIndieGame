@@ -8,6 +8,7 @@
 #define TEXT_BOLD (1<<3)
 #define TEXT_DELETE (1<<4)
 
+const HFONT defaultFont = CreateFontW(25, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, L"SimSun");
 std::wstring to_wide_string(const std::string &str);
 
 class Text {

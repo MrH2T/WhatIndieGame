@@ -127,7 +127,8 @@ void Room_Test::roomInit() {
                         ConversationSequence::getInstance().startBattleConv();
                         });
                     ev.subscribe("BATTLE_END", "BattleEndListen", [&]() {
-                        AudioManager::getInstance().stopBgm(), AudioManager::getInstance().playSound("BGM_SANS", true);
+                        AudioManager::getInstance().stopBgm();
+                        //AudioManager::getInstance().playSound("BGM_SANS", true);
                         ev.unsubscribe("BATTLE_DIALOG_START", "BattleDialogCheck");
                         ev.unsubscribe("BATTLE_NEW_TURN", "BattleTurnHandler");
                         ev.unsubscribe("BATTLE_END_MERCY", "BattleMercyListen");

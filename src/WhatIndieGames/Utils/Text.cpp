@@ -45,28 +45,33 @@ Text::Text(std::wstring text, COLORREF t_color, COLORREF b_color, std::wstring f
 	height = ht;
 	width = wd;
 	fontname = fname;
-	interpreteFont();
+	if (ht == 25 && wd == 0 && st == 0&&fname==L"SimSun") {
+		font = defaultFont;
+	}
+	else interpreteFont();
 }
 void Text::setTColor(COLORREF color) {
 	text_color = color;
-	interpreteFont();
+	//interpreteFont();
 }
 void Text::setBColor(COLORREF color) {
 	bg_color = color;
-	interpreteFont();
+	//interpreteFont();
 }
 void Text::setContent(std::wstring text) {
 	content = text;
-	interpreteFont();
+	//interpreteFont();
 }
 void Text::setHeight(int ht) {
 	height = ht;
-	interpreteFont();
+	//interpreteFont();
 }
 void Text::setState(unsigned int st){
 	state = st;
+	//interpreteFont();
 }
 HFONT Text::getFont() {
+	//interpreteFont();
 	return font;
 }
 COLORREF Text::getTColor() {

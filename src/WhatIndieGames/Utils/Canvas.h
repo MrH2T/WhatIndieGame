@@ -67,6 +67,8 @@ public:
 	void clearObjects();
 	//tick frames
 	void tickFrames();
+
+	void revealYourself();
 private:
 	Canvas() {}
 	std::unordered_map<std::string, DrawableObject> contents;	//storing all paintable objects

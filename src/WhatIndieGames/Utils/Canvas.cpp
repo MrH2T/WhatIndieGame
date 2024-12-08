@@ -114,8 +114,8 @@ void Canvas::renderScene(HWND &hWnd) {
 	HBITMAP	blankBmp = CreateCompatibleBitmap(hdc_window, GameManager::getInstance().getSize().x,GameManager::getInstance().getSize().y);
 	SelectObject(hdc_memBuffer, blankBmp);
 
-	auto comp = [&](const std::string& a, const  std::string& b) {return contents[a].posY+contents[a].y_priobias > contents[b].posY+contents[b].y_priobias; };
-	std::priority_queue < std::string, std::vector<std::string>, decltype(comp) > q(comp);
+	static auto comp = [&](const std::string& a, const  std::string& b) {return contents[a].posY+contents[a].y_priobias > contents[b].posY+contents[b].y_priobias; };
+	static std::priority_queue < std::string, std::vector<std::string>, decltype(comp) > q(comp);
 	for (int layer = MIN_LAYER; layer <= MAX_LAYER; layer++) {
 		while (!q.empty())q.pop();
 		for (auto obj: layers[layer]) {
@@ -124,7 +124,10 @@ void Canvas::renderScene(HWND &hWnd) {
 				q.push(obj.first);
 			}
 		}
-		while (!q.empty()) { drawSingleObject(hdc_memBuffer, hdc_loadBmp, contents[q.top()]); q.pop(); }
+		while (!q.empty()) { 
+			drawSingleObject(hdc_memBuffer, hdc_loadBmp, contents[q.top()]); 
+			q.pop(); 
+		}
 	}
 	// 最后将所有的信息绘制到屏幕上
 	HDC hdc_membuf2 = CreateCompatibleDC(hdc_window);
@@ -167,6 +170,9 @@ void Canvas::addObject(std::string identifier, DrawableObject obj) {
 }
 //delete an object on the canvas
 void Canvas::deleteObject(std::string identifier) {
+	if (contents[identifier].objectType == DrawableObject::TYPE_TEXT) {
+		DeleteObject(contents[identifier].text.getFont());
+	}
 	layers[contents[identifier].priority].erase(identifier);
 	contents.erase(identifier);
 }
@@ -208,4 +214,13 @@ void Canvas::tickFrames() {
 			obj.second.anim.tickFrame();
 		}
 	}
+}
+void Canvas::revealYourself() {
+	FILE* dbg = NULL;
+	fopen_s(&dbg, "debug.txt", "a");
+	for (auto& obj : contents) {
+		fprintf(dbg, "%s\n", obj.first.c_str());
+	}
+	fprintf(dbg, "\n");
+	fclose(dbg);
 }

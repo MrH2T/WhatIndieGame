@@ -205,7 +205,8 @@ void timerTick(HWND hWnd, WPARAM wParam ,LPARAM lParam) {
     
     AudioManager::getInstance().checkStopped();
     
-
+    Canvas::getInstance().getObject("Debug").text.setContent(std::to_wstring(GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->getPos().x) +
+        L"," + std::to_wstring(GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->getPos().y));
 
     Canvas::getInstance().tickFrames();
     InvalidateRect(hWnd, NULL, FALSE);
@@ -259,6 +260,7 @@ void keyDown(HWND hWnd, WPARAM wParam, LPARAM lParam)
         break;
     case 'V':
         if (GameManager::getInstance().globalVar["V_PRESS"] != 1) {
+            Canvas::getInstance().revealYourself();
             GameManager::getInstance().globalVar["V_PRESS"] = 1;
             EventManager::getInstance().emit("V_PRESS");
         }
@@ -388,6 +390,10 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
 
     auto& cv = Canvas::getInstance();
     auto& ev = EventManager::getInstance();
+
+    cv.addObject("Debug", DrawableObject(Text(L""), 0, 0, {0,0,300,200}, 10, DRAW_ABSOLUTE | DRAW_VISIBLE));
+
+
 #pragma region PauseMenuPrepare
     cv.addObject("Pause_Menu_Box",
         DrawableObject(
@@ -767,7 +773,6 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     GameManager::getInstance().setRoom(ROOM_MAINMENU,GAME_STATE_MAINMENU);
 
     SetTimer(hWnd, TIMER_GAMETIMER, TIMER_GAMETIMER_ELAPSE, NULL);
-
 }
 
 void gamePause() {

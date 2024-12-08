@@ -352,6 +352,7 @@ void Battle::battleSysInit() {
 				if (item_choice == 2 || item_choice == 3) {
 					AudioManager::getInstance().playSound("SND_CHOOSE");
 					item_choice -= 2;
+					drawingUpdate();
 				}
 			}
 		}
@@ -376,6 +377,7 @@ void Battle::battleSysInit() {
 					{
 						AudioManager::getInstance().playSound("SND_CHOOSE");
 						item_choice += 2;
+						drawingUpdate();
 					}
 				}
 			}
@@ -779,6 +781,7 @@ void Battle::hideScene() {
 void Battle::clearVars() {
 	actions.clear();
 	localVar.clear();
+	item_func.clear();
 	mercible = NULL;
 	battle_state = 0;
 	text = "";
