@@ -83,7 +83,8 @@ void Canvas::drawSingleObject(HDC& membuf, HDC& load, DrawableObject &obj) {
 
 	}
 	if (obj.objectType == DrawableObject::TYPE_TEXT) {
-		SelectObject(membuf, obj.text.getFont());
+		HFONT font = obj.text.interpreteFont();
+		SelectObject(membuf, font);
 		SetTextColor(membuf, obj.text.getTColor());	// 设置颜色:黑色字体白色背景
 		SetBkColor(membuf, obj.text.getBColor());
 		RECT rect;
@@ -92,6 +93,7 @@ void Canvas::drawSingleObject(HDC& membuf, HDC& load, DrawableObject &obj) {
 		rect.right = obj.posX + obj.expandBox.right;
 		rect.bottom = obj.posY + obj.expandBox.bottom;
 		DrawTextW(membuf, obj.text.getContent().c_str(), -1, &rect, DT_WORDBREAK);
+		DeleteObject(font);
 	}
 	//SUSPECT
 	if (obj.objectType == DrawableObject::TYPE_BACKGROUND) {
@@ -170,9 +172,6 @@ void Canvas::addObject(std::string identifier, DrawableObject obj) {
 }
 //delete an object on the canvas
 void Canvas::deleteObject(std::string identifier) {
-	if (contents[identifier].objectType == DrawableObject::TYPE_TEXT) {
-		DeleteObject(contents[identifier].text.getFont());
-	}
 	layers[contents[identifier].priority].erase(identifier);
 	contents.erase(identifier);
 }

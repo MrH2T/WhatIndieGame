@@ -12,7 +12,10 @@ void Room_Test::roomInit() {
         DrawableObject(
             Animation(map, 1, 1, 1, 240, 160),
             0, 0, RECT({ 0,0,width,height }), 0));
+
+    GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setPos({500,500});
     GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setVisible(true);
+
     
     Animation allanimF = Animation(ResourceManager::getInstance().getResource("SANS_IMAGES"), 16, 4, 4, 23, 30);
     Animation allanim4F = Animation(ResourceManager::getInstance().getResource("SANS_IMAGES"), 4, 4, 1, 23 * 4, 30);

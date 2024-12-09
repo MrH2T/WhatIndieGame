@@ -22,6 +22,7 @@ void Room_Help::roomInit() {
 
     cv.addObject("Tip1", DrawableObject(Text(L"按上、下、左、右来移动",RGB(255,255,255),RGB(133,163,216)), 170, 190, { 0,0,300,40 }, 1, DRAW_VISIBLE));
     cv.addObject("Tip2", DrawableObject(Text(L"按 C 打开菜单，Z，X分别表示确认和撤回（在一切地方皆如此）",RGB(255,255,255),RGB(133,163,216)), 500, 300, { 0,0,800,40 }, 1, DRAW_VISIBLE));
+    cv.addObject("Tip3", DrawableObject(Text(L"按 Z 与人物、场景交互",RGB(255,255,255),RGB(133,163,216)), 940, 420, { 0,0,800,40 }, 1, DRAW_VISIBLE));
 
     Animation allanimF = Animation(ResourceManager::getInstance().getResource("SANS_IMAGES"), 16, 4, 4, 23, 30);
     Animation allanim4F = Animation(ResourceManager::getInstance().getResource("SANS_IMAGES"), 4, 4, 1, 23 * 4, 30);
@@ -38,15 +39,34 @@ void Room_Help::roomInit() {
         Animation(allanim4F.getFrame(2),4,1,4,23,30),
         Animation(allanim4F.getFrame(3),4,1,4,23,30),
         });
+    int* battled=&localVar["Battled"];
+    *battled = 0;
     npcmanF->setReaction([=]() {
         if (GameManager::getInstance().globalVar[GLOBAL_BATTLE_PREPARING] == 1)return;
         if (GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] == GAME_STATE_BATTLE)return;
+        if (GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] <= 50) {
+            if (GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;
+            Animation sansface = Animation(ResourceManager::getInstance().getResource("SANS_FACE"), 1, 1, 1, 32, 30);
+            ConversationSequence::getInstance().setSequence(ConvSeq({
+                [=]() {
+                    AudioManager::getInstance().playSound("SND_SANS_SPEAK",false);
+                    Conversation::getInstance().beginConversation(Text(L"* 你的HP太低了。"),sansface); },
+                [=]() {
+                    AudioManager::getInstance().playSound("SND_SANS_SPEAK",false);
+                    Conversation::getInstance().beginConversation(Text(L"* 我都不敢相信你这么菜。"),
+                        Animation(ResourceManager::getInstance().getResource("SANS_CLOSEEYE"), 1, 1, 1, 32, 30)); } }
+            ));
+            ConversationSequence::getInstance().startConversation();
+            return;
+        }
+
+        if (*battled == 0)*battled = 1;
         AudioManager::getInstance().playSound("SND_ENEMYALARM");
         GameManager::getInstance().getEntity(ENTITY_MAIN_PLAYER)->setSpeedX(0);
         GameManager::getInstance().getEntity(ENTITY_MAIN_PLAYER)->setSpeedY(0);
         GameManager::getInstance().updateEntityPositions();
         GameManager::getInstance().globalVar[GLOBAL_BATTLE_PREPARING] = 1;
-
+        
         GameManager::getInstance().addWaiting([=]() {
 
             GameManager::getInstance().globalVar[GLOBAL_BATTLE_PREPARING] = 0;
@@ -122,11 +142,11 @@ void Room_Help::roomInit() {
                                 }));
                         }
                         else if (turn == 3) {
-                            bt.setAttack(Battle::Attack({{10,Bul(1,10,1,1)}
-                                //{10,Bul(1,10,1,1,10,chgLine(1,200,210,1,0))},{30,Bul(2,10,1,1,10,chgLine(2,200,210,1,2))},
-                                //{50,Bul(3,10,0,1,10,chgLine(3,200,210,0,1))},{70,Bul(4,10,2,1,10,chgLine(4,200,210,2,1))},
-                                //{90,Bul(5,10,0,1,10,chgLine(5,200,210,0,2))},{110,Bul(6,10,2,1,10,chgLine(6,200,210,2,0))},
-                                //{130,Bul(7,10,0,1,10,chgLine(7,200,210,0,2))},{150,Bul(8,10,2,1,10,chgLine(8,200,210,2,0))}
+                            bt.setAttack(Battle::Attack({
+                                {10,Bul(1,10,1,1,10,chgLine(1,200,210,1,0))},{30,Bul(2,10,1,1,10,chgLine(2,200,210,1,2))},
+                                {50,Bul(3,10,0,1,10,chgLine(3,200,210,0,1))},{70,Bul(4,10,2,1,10,chgLine(4,200,210,2,1))},
+                                {90,Bul(5,10,0,1,10,chgLine(5,200,210,0,2))},{110,Bul(6,10,2,1,10,chgLine(6,200,210,2,0))},
+                                {130,Bul(7,10,0,1,10,chgLine(7,200,210,0,2))},{150,Bul(8,10,2,1,10,chgLine(8,200,210,2,0))}
                                 }));
                         }
                         else if (turn == 4) {
@@ -164,7 +184,7 @@ void Room_Help::roomInit() {
 
 
                     ev.subscribe("BATTLE_END_MERCY", "BattleMercyListen", [=]() {
-                        //AudioManager::getInstance().stopBgm();
+                        AudioManager::getInstance().stopBgm();
                         ConversationSequence::getInstance().setSequence(ConvSeq{
                             []() {Conversation::getInstance().beginConversation(Text(L"* 你胜利了!")); },
                             []() {ConversationSequence::getInstance().stopBattleConv(); BattleController::getInstance().endBattle();  } });
@@ -190,7 +210,34 @@ void Room_Help::roomInit() {
     npcmanF->setVisible(true);
     addEntity("SANB", npcmanF);
 
-    Entity* npcman = new Entity("NPC", 300, 670, { 0,30,23 * 2,30 * 2 }, { 0, 0, 23 * 2,30 * 2 },
+
+    Entity* toriel = new Entity("Toriel", 230, 730-2*52, { 0,52,25 * 2,52 * 2 }, { 0,0,25 * 2,52 * 2 },
+        firstColumn(ResourceManager::getInstance().getResource("TORIEL_IMAGES"),25,52) ,
+            groupBy4(ResourceManager::getInstance().getResource("TORIEL_IMAGES"),25,52));
+    toriel->setReaction([=]() {
+        if (GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;
+        Animation torielface = Animation(ResourceManager::getInstance().getResource("TORIEL_FACE"), 1, 1, 1, 32, 32);
+        ConversationSequence::getInstance().setSequence(ConvSeq({
+            [=]() {
+                AudioManager::getInstance().playSound("SND_TORIEL_SPEAK",false);
+                Conversation::getInstance().beginConversation(Text(L"* 孩子，我想你一定会喜欢这个派！"), torielface); },
+            [=]() {
+                if (GameManager::getInstance().inventory.size() >= INVENTORY_SIZE) {
+                    Conversation::getInstance().beginConversation(Text(L"* 但是你好像拿不下了。"), torielface);
+                    AudioManager::getInstance().playSound("SND_TORIEL_SPEAK",false);
+                }
+                else {
+                    Conversation::getInstance().beginConversation(Text(L"* 你获得了 派。"));
+                    GameManager::getInstance().addItem("派");
+                }
+            } }
+        ));
+        ConversationSequence::getInstance().startConversation();
+        }, 0);
+    toriel->setVisible(true);
+    addEntity("Toriel",toriel);
+
+    Entity* npcman = new Entity("NPC", 300, 730-2*30, { 0,30,23 * 2,30 * 2 }, { 0, 0, 23 * 2,30 * 2 },
         animsF, {
         Animation(allanim4F.getFrame(0),4,1,4,23,30),
         Animation(allanim4F.getFrame(1),4,1,4,23,30),
@@ -198,41 +245,46 @@ void Room_Help::roomInit() {
         Animation(allanim4F.getFrame(3),4,1,4,23,30),
         });
     npcman->setVisible(true);
-    npcman->setReaction([&]() {
+    npcman->setReaction([=]() {
         if (GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;
         Animation sansface = Animation(ResourceManager::getInstance().getResource("SANS_FACE"), 1, 1, 1, 32, 30);
+        if (*battled == 1) {
+            *battled = 2;
+            ConversationSequence::getInstance().setSequence(ConvSeq({
+            [=]() {
+                AudioManager::getInstance().playSound("SND_SANS_SPEAK",false);
+                Conversation::getInstance().beginConversation(Text(L"* 你说站在右边的那个家伙？"),sansface); },
+            [=]() {
+                AudioManager::getInstance().playSound("SND_SANS_SPEAK",false);
+                Conversation::getInstance().beginConversation(Text(L"* 你的妈妈没教过你瞬移吗？"),sansface); },
+                }
+            ));
+            ConversationSequence::getInstance().startConversation();
+            return;
+        }
         ConversationSequence::getInstance().setSequence(ConvSeq({
             [=]() {
                 AudioManager::getInstance().playSound("SND_SANS_SPEAK",false);
-                Conversation::getInstance().beginConversation(Text(L"* wanna some ketchup?",RGB(255,255,255),RGB(0,0,0),L"Comic Sans MS",40),sansface); },
+                Conversation::getInstance().beginConversation(Text(L"* 就像这样，按Z进行对话。"),sansface); },
+            [=]() {
+                AudioManager::getInstance().playSound("SND_SANS_SPEAK",false);
+                Conversation::getInstance().beginConversation(Text(L"* 学会了吗？"),sansface); },
             [=]() {Conversation::getInstance().beginConversation(
 
                 Conversation::Choice(ChoiceItem({
-                    Text(L"Yes",RGB(255,255,255),RGB(0,0,0),L"Determination Regular",40),
-                    Text(L"No",RGB(255,255,255),RGB(0,0,0),L"Determination Regular",40)
+                    Text(L"学会了"),
+                    Text(L"没学会")
                     }),[](int res) {GameManager::getInstance().globalVar["Choose_Temp"] = res + 1; })
             ); },
             [=]() {
                 AudioManager::getInstance().playSound("SND_SANS_SPEAK",false);
                 if (GameManager::getInstance().globalVar["Choose_Temp"] == 1) {
-                    Conversation::getInstance().beginConversation(Text(L"* here you are.", RGB(255, 255, 255), RGB(0, 0, 0), L"Comic Sans MS", 40),sansface);
+                    Conversation::getInstance().beginConversation(Text(L"* 很好。"),sansface);
                 }
                 else if (GameManager::getInstance().globalVar["Choose_Temp"] == 2) {
-                    Conversation::getInstance().beginConversation(Text(L"* pity.", RGB(255, 255, 255), RGB(0, 0, 0), L"Comic Sans MS", 40),
-                        Animation(ResourceManager::getInstance().getResource("SANS_CLOSEEYE"), 1, 1, 1, 32, 30));
+                    ConversationSequence::getInstance().startConversation();
                 }
-            },
-            [=]() {
-                if (GameManager::getInstance().globalVar["Choose_Temp"] == 1) {
-                    Conversation::getInstance().beginConversation(Text(L"* (You drink the ketchup. )", 0xffffff, 0x000000, L"Determination Regular", 40));
-                }
-                else ConversationSequence::getInstance().stopConversation();
-                GameManager::getInstance().globalVar.erase("Choose_Temp");
-            },
-            [=]() {
-                 Conversation::getInstance().beginConversation(Text(L"* (The sweetness fills you with determination. )", 0xffffff, 0x000000, L"Determination Regular", 40));
-               }
-            }
+            } }
         ));
         ConversationSequence::getInstance().startConversation();
         }, 0);
@@ -268,6 +320,7 @@ Room_Help::~Room_Help() {
     Canvas::getInstance().deleteObject("background_room_help");
     Canvas::getInstance().deleteObject("Tip1");
     Canvas::getInstance().deleteObject("Tip2");
+    Canvas::getInstance().deleteObject("Tip3");
     
     GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setSpeedX(0);
     GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setSpeedY(0);

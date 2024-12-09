@@ -144,8 +144,8 @@ Room_Mainmenu::~Room_Mainmenu() {
 }
 void Room_Mainmenu::roomUpdate() {
     auto& bg1 = Canvas::getInstance().getObject("Background1"),&bg2=Canvas::getInstance().getObject("Background2");
-    bg1.posY -= 5;
-    bg2.posY -= 5;
+    bg1.posY -= 10;
+    bg2.posY -= 10;
     if (bg1.posY == -640)bg1.posY = 640;
     if (bg2.posY == -640)bg2.posY = 640;
     static unsigned int count = 0;

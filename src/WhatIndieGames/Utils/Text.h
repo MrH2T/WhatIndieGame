@@ -20,7 +20,8 @@ public:
 	void setBColor(COLORREF bcolor);
 	void setState(unsigned int st);
 	void setHeight(int ht);
-	HFONT getFont();
+	//HFONT getFont();
+	HFONT interpreteFont();
 	COLORREF getTColor();
 	COLORREF getBColor();
 	int getHeight();
@@ -29,8 +30,7 @@ public:
 private:
 	unsigned int state;
 	int height,width;
-	HFONT font;
+	//HFONT font;
 	std::wstring content,fontname;
 	COLORREF text_color, bg_color;
-	void interpreteFont();
 };

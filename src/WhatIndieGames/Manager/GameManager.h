@@ -36,6 +36,10 @@
 #define GLOBAL_PLAYER_EXP "GLOBAL_PLAYER_EXP_VARIABLE"
 #define GLOBAL_PLAYER_GOLD "GLOBAL_PLAYER_GOLD_VARIABLE"
 
+std::vector<Animation> groupBy4(HBITMAP image, int width,int height);
+std::vector<Animation> firstColumn(HBITMAP image, int width,int height);
+
+
 class GameManager {
 public:
 	static GameManager& getInstance();

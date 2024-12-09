@@ -26,11 +26,11 @@ Text::Text() {
 	fontname = L"";
 	text_color = RGB(255,255,255);
 	bg_color = RGB(0, 0, 0);
-	font = NULL;
+	//font = NULL;
 	height = 25;
 }
-void Text::interpreteFont() {
-	font = CreateFontW(height, width, 0, 0, (state & TEXT_BOLD) ? FW_BOLD : FW_NORMAL,
+HFONT Text::interpreteFont() {
+	return CreateFontW(height, width, 0, 0, (state & TEXT_BOLD) ? FW_BOLD : FW_NORMAL,
 		(state & TEXT_ITALIC) ? TRUE : FALSE,
 		(state & TEXT_UNDERLINE) ? TRUE : FALSE,
 		(state & TEXT_DELETE) ? TRUE : FALSE,
@@ -45,10 +45,10 @@ Text::Text(std::wstring text, COLORREF t_color, COLORREF b_color, std::wstring f
 	height = ht;
 	width = wd;
 	fontname = fname;
-	if (ht == 25 && wd == 0 && st == 0&&fname==L"SimSun") {
+	/*if (ht == 25 && wd == 0 && st == 0 && fname == L"SimSun") {
 		font = defaultFont;
 	}
-	else interpreteFont();
+	else interpreteFont();*/
 }
 void Text::setTColor(COLORREF color) {
 	text_color = color;
@@ -70,10 +70,10 @@ void Text::setState(unsigned int st){
 	state = st;
 	//interpreteFont();
 }
-HFONT Text::getFont() {
-	//interpreteFont();
-	return font;
-}
+//HFONT Text::getFont() {
+//	//interpreteFont();
+//	return font;
+//}
 COLORREF Text::getTColor() {
 	return text_color;
 }

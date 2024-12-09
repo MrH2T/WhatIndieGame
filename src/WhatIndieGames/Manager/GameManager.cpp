@@ -2,6 +2,27 @@
 #include"../Utils/Canvas.h"
 
 
+std::vector<Animation> groupBy4(HBITMAP image, int width, int height) {
+	Animation allanimF = Animation(image, 16, 4, 4, width, height);
+	Animation allanim4F = Animation(image, 4, 4, 1, width*4,height);
+	return { Animation(allanim4F.getFrame(0),4,1,4,23,30),
+		Animation(allanim4F.getFrame(1),4,1,4,23,30),
+		Animation(allanim4F.getFrame(2),4,1,4,23,30),
+		Animation(allanim4F.getFrame(3),4,1,4,23,30) };
+	
+}
+std::vector<Animation> firstColumn(HBITMAP image, int width, int height){
+	Animation allanimF = Animation(image, 16, 4, 4, width, height);
+	return {
+		Animation(allanimF.getFrame(0),1,1,1,width,height),
+		Animation(allanimF.getFrame(4),1,1,1,width,height),
+		Animation(allanimF.getFrame(8),1,1,1,width,height),
+		Animation(allanimF.getFrame(12),1,1,1,width,height),
+	};
+}
+
+
+
 bool rectCollide(RECT r1, RECT r2) {
 	if (r1.right <= r2.left || r1.bottom <= r2.top || r1.left >= r2.right || r1.top >= r2.bottom)return false;
 	return true;

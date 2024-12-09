@@ -260,7 +260,6 @@ void keyDown(HWND hWnd, WPARAM wParam, LPARAM lParam)
         break;
     case 'V':
         if (GameManager::getInstance().globalVar["V_PRESS"] != 1) {
-            Canvas::getInstance().revealYourself();
             GameManager::getInstance().globalVar["V_PRESS"] = 1;
             EventManager::getInstance().emit("V_PRESS");
         }
@@ -363,6 +362,9 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("MAINMENU_NIKO",bitmap(MAINMENU_NIKO_BMP));
     rs.loadResource("MAINMENU_PURPLELIGHTS", bitmap(MAINMENU_PURPLELIGHTS_BMP));
     rs.loadResource("MAINMENU_BACKGROUND", bitmap(MAINMENU_BACKGROUND_BMP));
+    rs.loadResource("TORIEL_IMAGES", bitmap(TORIEL_BMP));
+    rs.loadResource("SAVEPOINT", bitmap(SAVEPOINT_BMP));
+    rs.loadResource("TORIEL_FACE", bitmap(TORIEL_FACE_BMP));
 
     
 #pragma endregion
@@ -379,6 +381,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("SND_ENEMYHIT", "Resource/Audio/snd_enemyhit.wav", 1);
     am.loadAudio("SND_ITEMUSE", "Resource/Audio/snd_itemuse.wav", 1);
     am.loadAudio("SND_SAVING", "Resource/Audio/snd_saving.wav", 1);
+    am.loadAudio("SND_TORIEL_SPEAK", "Resource/Audio/snd_toriel_speak.wav", 1);
 
     am.loadAudio("BGM_SANS", "Resource/Audio/bgm_sans.wav");
     am.loadAudio("BGM_SNOWTOWN", "Resource/Audio/bgm_snowtown.wav");
@@ -622,6 +625,19 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             auto& conv = Conversation::getInstance();
             ConversationSequence::getInstance().setSequence({
                 [&]() {conv.beginConversation(Text(L"* 恢复了 5 HP.")); },
+                [&]() {ConversationSequence::getInstance().stopBattleConv(); Battle::getInstance().switchState(BATTLE_DIALOG); }
+                });
+            ConversationSequence::getInstance().startBattleConv();
+        }
+        }));
+    ir.registerItem("派", Item("派", "回复90HP", []() {
+        auto& gm = GameManager::getInstance();
+        gm.addHP(90);
+        AudioManager::getInstance().playSound("SND_ITEMUSE");
+        if (gm.globalVar[GLOBAL_GAME_STATE] == GAME_STATE_BATTLE) {
+            auto& conv = Conversation::getInstance();
+            ConversationSequence::getInstance().setSequence({
+                [&]() {conv.beginConversation(Text(L"* 恢复了 90 HP.")); },
                 [&]() {ConversationSequence::getInstance().stopBattleConv(); Battle::getInstance().switchState(BATTLE_DIALOG); }
                 });
             ConversationSequence::getInstance().startBattleConv();
