@@ -35,6 +35,7 @@
 #define GLOBAL_PLAYER_LV "GLOBAL_PLAYER_LV_VARIABLE"
 #define GLOBAL_PLAYER_EXP "GLOBAL_PLAYER_EXP_VARIABLE"
 #define GLOBAL_PLAYER_GOLD "GLOBAL_PLAYER_GOLD_VARIABLE"
+#define GLOBAL_KILLS "GLOBAL_KILLS_VARIABLE"
 
 std::vector<Animation> groupBy4(HBITMAP image, int width,int height);
 std::vector<Animation> firstColumn(HBITMAP image, int width,int height);
@@ -72,6 +73,8 @@ public:
 	void eraseItem(std::string name);
 
 	void addHP(int v);
+	void addEXP(int v);
+	void addGold(int v);
 
 	void gameSaving();
 

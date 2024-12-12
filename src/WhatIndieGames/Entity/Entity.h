@@ -30,9 +30,11 @@ public:
 	bool isPassable();
 	bool isReact();
 	bool isCollide();
+	bool isOnCollide();
 	int getStatus();
 	int getType();
 	int getDirection();
+	void setOnCollide(bool c);
 	void setStatus(int state);
 	void setSpeedX(int vx);
 	void setSpeedY(int vy);
@@ -41,6 +43,7 @@ public:
 	void setPassable(bool pass);
 	void setPos(Coord pos,bool force=0);
 	void setDrawYPrioBias(int ypriobias);
+	void setLayer(int layer);
 	//type0:react, type1:collide
 	void setReaction(std::function<void()> react_func,int type);
 	void updatePosition();
@@ -53,7 +56,7 @@ public:
 	void reactRun();
 private:
 	std::string name;
-	bool visible,react,collide;
+	bool visible,react,collide,onCollide;
 	//it seems like an unused var
 	int type;
 	int speed,direction;

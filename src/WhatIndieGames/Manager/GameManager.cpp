@@ -50,7 +50,8 @@ void GameManager::gameUpdate() {
 	runWaiting();
 }
 bool GameManager::checkWalkable(std::string identifier, int x, int y, RECT c_box) {
-	for (auto const& ent : entities) {
+	if (identifier != ENTITY_MAIN_PLAYER)return true;
+	for (auto& ent : entities) {
 		if (ent.first == identifier)continue;
 		/*if (!(ent.second->getPos().x + ent.second->getCollisionBox().right <= x) && !(x + c_box.right <= ent.second->getPos().x)
 			&& !(ent.second->getPos().y + ent.second->getCollisionBox().bottom <= y) && !(y+c_box.bottom <= ent.second->getPos().y )
@@ -62,10 +63,19 @@ bool GameManager::checkWalkable(std::string identifier, int x, int y, RECT c_box
 		r1.top += y, r1.bottom += y;
 		r2.left += ent.second->getPos().x,r2.right+=ent.second->getPos().x;
 		r2.top += ent.second->getPos().y, r2.bottom += ent.second->getPos().y;
+		//FILE* dbg = NULL;
+		//fopen_s(&dbg, "debug.txt", "a");
+		///*if(ent.first=="Board1_drawobj")
+		//	fprintf(dbg, "%d\n",rectCollide(r1,r2));*/
+		//fclose(dbg);
+		if (ent.second->isPassable() && ent.second->isOnCollide() && !rectCollide(r1, r2)) {
+			ent.second->setOnCollide(false);
+		}
 		if (!ent.second->isPassable() && rectCollide(r1, r2)) {
 			return false;
 		}
-		if (ent.second->isPassable() && rectCollide(r1, r2) && ent.second->isCollide()) {
+		if (ent.second->isPassable() && rectCollide(r1, r2) && ent.second->isCollide()&&!ent.second->isOnCollide()) {
+			ent.second->setOnCollide(true);
 			addWaiting([&]() {ent.second->reactRun(); });
 			return true;
 		}
@@ -123,7 +133,7 @@ Coord GameManager::getSize() {
 	}
 }
 Coord GameManager::getBias() {
-	if (globalVar[GLOBAL_GAME_STATE] != GAME_STATE_COMMON)return { 0,0 };
+	if (globalVar[GLOBAL_GAME_STATE] != GAME_STATE_COMMON&&globalVar[GLOBAL_GAME_STATE]!=GAME_STATE_CUTSCENE)return {0,0};
 	Coord player= entities[ENTITY_MAIN_PLAYER]->getPos();
 	player.x += MAIN_PLAYER_WIDTH/2;
 	player.y += MAIN_PLAYER_HEIGHT/2;
@@ -147,11 +157,11 @@ void GameManager::setRoom(int roomid,int stat){
 	globalVar[GLOBAL_GAME_STATE] = GAME_STATE_OTHER;
 	if (curRoom != NULL) { 
 		delete curRoom;
-
+		curRoom = NULL;
 	}
 	curRoom = getRoom(roomid);
 	globalVar[GLOBAL_GAME_STATE] = stat;
-	//addWaiting([=]() {curRoom = getRoom(roomid); GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] = GAME_STATE_COMMON; },0);
+	//addWaiting([=]() {curRoom = getRoom(roomid); GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] = stat; },0);
 }
 
 void GameManager::addItem(std::string name) {
@@ -176,6 +186,19 @@ void GameManager::eraseItem(std::string name) {
 }
 void GameManager::addHP(int v) {
 	globalVar[GLOBAL_PLAYER_HP] = std::min(globalVar[GLOBAL_PLAYER_HP] + v, savingVar[GLOBAL_PLAYER_MAXHP]);
+}
+void GameManager::addEXP(int v) {
+	int& exp =savingVar[GLOBAL_PLAYER_EXP];
+	exp+= v;
+	if (exp >= 100)savingVar[GLOBAL_PLAYER_LV] = 5;
+	else if (exp >= 80)savingVar[GLOBAL_PLAYER_LV] = 4;
+	else if (exp >= 60)savingVar[GLOBAL_PLAYER_LV] = 3;
+	else if (exp >= 30)savingVar[GLOBAL_PLAYER_LV] = 2;
+	else if (exp >= 10)savingVar[GLOBAL_PLAYER_LV] = 1;
+	else savingVar[GLOBAL_PLAYER_LV] = 0;
+}
+void GameManager::addGold(int v) {
+	savingVar[GLOBAL_PLAYER_GOLD] += v;
 }
 void GameManager::reactCheck() {
 	Entity* pl = entities[ENTITY_MAIN_PLAYER];
@@ -232,6 +255,7 @@ void GameManager::gameSaving() {
 bool GameManager::readSaving(){
 	std::ifstream saving("saving.txt");
 	if (!saving.good())return false;
+	inventory.clear();
 	int rmid = 0;
 	saving >> rmid;
 	for (int i = 0; i < 8; i++) {
@@ -241,11 +265,13 @@ bool GameManager::readSaving(){
 		else addItem(str);
 	}
 	std::string str1, str2;
+	std::getline(saving, str1);
 	while (std::getline(saving, str1)) {
 		std::getline(saving, str2);
 		savingVar[str1] = std::stoi(str2);
 	}
 	saving.close();
+	globalVar[GLOBAL_PLAYER_HP] = savingVar[GLOBAL_PLAYER_MAXHP];
 	globalVar[ROOM_ENTRANCE] = ROOM_ENTRY_SAVING;
 	setRoom(rmid);
 	return true;
@@ -261,13 +287,14 @@ void GameManager::goMainMenu() {
 }
 void GameManager::newGame() {
 	inventory.clear();
-
+	savingVar.clear();
 	globalVar[GLOBAL_PLAYER_HP]=savingVar[GLOBAL_PLAYER_MAXHP] = 20;
 	savingVar[GLOBAL_PLAYER_GOLD] = 0;
 	savingVar[GLOBAL_PLAYER_ATK] = 2;
 	savingVar[GLOBAL_PLAYER_DEF] = 0;
 	savingVar[GLOBAL_PLAYER_EXP] = 0;
 	savingVar[GLOBAL_PLAYER_LV] = 0;
+	savingVar[GLOBAL_KILLS] = 0;
 	
 	setRoom(ROOM_TEST);
 }

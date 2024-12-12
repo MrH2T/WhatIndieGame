@@ -45,6 +45,13 @@
 #define TORIEL_BMP						143
 #define SAVEPOINT_BMP					144
 #define TORIEL_FACE_BMP					145
+#define RUINS_TILESET_BMP				146
+#define SPIKE_BMP						147
+#define FALLDOWN_ROOM_BMP				148
+#define NIKO_SHOCK_FACE_BMP				149
+#define CANDYDISH_BMP					150
+#define FROGGIT_BMP						151
+#define NIKO_SPEAK_FACE_BMP 			152
 
 
 

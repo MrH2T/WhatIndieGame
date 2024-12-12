@@ -559,7 +559,7 @@ int Battle::causeAttack() {
 
 	GameManager::getInstance().addWaiting([]() {
 		Canvas::getInstance().getObject(PLAYER_DRAWOBJ).anim = Battle::getInstance().player_anims[0]; }, 20);
-	checkEnemy();
+	//checkEnemy();
 	return realDamage;
 }
 void Battle::checkPlayer() {
@@ -581,10 +581,12 @@ void Battle::checkEnemy() {
 
 void Battle::battleFinish(int what) {
 	if (what == BATTLE_MERCY) {
+		localVar["BATTLE_END"] = 1;
 		switchState(BATTLE_DIALOG);
 		EventManager::getInstance().emit("BATTLE_END_MERCY");
 	}
 	else if (what == BATTLE_WIN) {
+		localVar["BATTLE_END"] = 1;
 		switchState(BATTLE_DIALOG);
 		EventManager::getInstance().emit("BATTLE_END_WIN");
 	}
@@ -670,10 +672,20 @@ void Battle::useAttack() {
 			int damage=Battle::getInstance().causeAttack(); 
 			Battle::getInstance().localVar[ATTACK_USE] += 1;
 			AudioManager::getInstance().playSound("SND_ATTACK");
-			GameManager::getInstance().addWaiting([]() {AudioManager::getInstance().playSound("SND_ENEMYHIT"); Canvas::getInstance().deleteObject("BATTLE_KNIFESLASH"); }, 10);
+			GameManager::getInstance().addWaiting([]() {
+
+				AudioManager::getInstance().playSound("SND_ENEMYHIT"); Canvas::getInstance().deleteObject("BATTLE_KNIFESLASH"); }, 10);
 			GameManager::getInstance().addWaiting([=]() {
-				ConversationSequence::getInstance().setSequence(ConvSeq{ [=]() {Conversation::getInstance().beginConversation(Text(L"* 造成了" + std::to_wstring(damage) + L"点伤害")); },
-					[]() {ConversationSequence::getInstance().stopBattleConv(); Battle::getInstance().switchState(BATTLE_DIALOG); } });
+				ConversationSequence::getInstance().setSequence(ConvSeq{ 
+					[=]() {Conversation::getInstance().beginConversation(Text(L"* 造成了" + std::to_wstring(damage) + L"点伤害")); },
+					[]() {
+						Battle::getInstance().checkEnemy();
+						if (Battle::getInstance().localVar["BATTLE_END"] != 1) {
+
+							ConversationSequence::getInstance().stopBattleConv(); Battle::getInstance().switchState(BATTLE_DIALOG);
+						}
+					} });
+
 				ConversationSequence::getInstance().startBattleConv();
 				},20);
 			

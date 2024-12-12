@@ -13,7 +13,7 @@ void Room_Test::roomInit() {
             Animation(map, 1, 1, 1, 240, 160),
             0, 0, RECT({ 0,0,width,height }), 0));
 
-    GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setPos({500,500});
+    GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setPos({500,300});
     GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setVisible(true);
 
     
@@ -161,13 +161,13 @@ void Room_Test::roomInit() {
     Entity* portal = new Entity("Portal", 500, 200, { 0,0,100,100 }, true);
     portal->setReaction([&]() {
         GameManager::getInstance().globalVar[ROOM_ENTRANCE]=0;
-        GameManager::getInstance().setRoom(ROOM_TEST_1); }, 1);
+        GameManager::getInstance().setRoom(ROOM_FALLDOWN,GAME_STATE_CUTSCENE); }, 1);
     addEntity("Portal",portal);
 
     //GameManager::getInstance().savingVar[GLOBAL_PLAYER_MAXHP] = 10;
     //GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] = GameManager::getInstance().savingVar[GLOBAL_PLAYER_MAXHP];
 
-    GameManager::getInstance().addItem("怪物糖果");
+    //GameManager::getInstance().addItem("怪物糖果");
 
 }
 Room_Test::~Room_Test () {

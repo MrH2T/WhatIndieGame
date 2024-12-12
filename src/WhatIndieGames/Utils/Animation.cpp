@@ -42,6 +42,7 @@ void Animation::loadAnimFromResource(const HBITMAP& resource, int tot, int rows,
 //manually append a frame
 void Animation::appendFrame(const HBITMAP& resource) {
 	frames.push_back(resource);
+	sequence.push_back(frames.size()-1);
 
 }
 int Animation::getWidth() {

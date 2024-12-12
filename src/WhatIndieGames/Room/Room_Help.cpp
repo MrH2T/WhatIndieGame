@@ -2,7 +2,7 @@
 #include"../Utils/Conversation.h"
 
 
-Room_Help::Room_Help() :Room(ROOM_TEST, NULL, 37 * TILE_GAME_SIZE, 21*TILE_GAME_SIZE) {
+Room_Help::Room_Help() :Room(ROOM_HELP, NULL, 37 * TILE_GAME_SIZE, 21*TILE_GAME_SIZE) {
     roomInit();
 }
 void Room_Help::roomInit() {
@@ -23,6 +23,7 @@ void Room_Help::roomInit() {
     cv.addObject("Tip1", DrawableObject(Text(L"按上、下、左、右来移动",RGB(255,255,255),RGB(133,163,216)), 170, 190, { 0,0,300,40 }, 1, DRAW_VISIBLE));
     cv.addObject("Tip2", DrawableObject(Text(L"按 C 打开菜单，Z，X分别表示确认和撤回（在一切地方皆如此）",RGB(255,255,255),RGB(133,163,216)), 500, 300, { 0,0,800,40 }, 1, DRAW_VISIBLE));
     cv.addObject("Tip3", DrawableObject(Text(L"按 Z 与人物、场景交互",RGB(255,255,255),RGB(133,163,216)), 940, 420, { 0,0,800,40 }, 1, DRAW_VISIBLE));
+    cv.addObject("Tip4", DrawableObject(Text(L"存档点可以保存存档",RGB(255,255,255),RGB(133,163,216)), 940, 670, { 0,0,800,40 }, 1, DRAW_VISIBLE));
 
     Animation allanimF = Animation(ResourceManager::getInstance().getResource("SANS_IMAGES"), 16, 4, 4, 23, 30);
     Animation allanim4F = Animation(ResourceManager::getInstance().getResource("SANS_IMAGES"), 4, 4, 1, 23 * 4, 30);
@@ -291,6 +292,19 @@ void Room_Help::roomInit() {
     npcman->setDirection(DIRECTION_DOWN);
     addEntity("npc", npcman);
 
+    Entity* savepoint = new Entity("Savepoint", 940, 700, { 5,5,35,35 }, { 0,0,40,40 },
+        Animation(ResourceManager::getInstance().getResource("SAVEPOINT"),2,1,2,20,20,5));
+    savepoint->setVisible(true);
+    savepoint->setReaction([]() {
+        AudioManager::getInstance().playSound("SND_SAVING");
+        GameManager::getInstance().addHP(1000);
+        ConversationSequence::getInstance().setSequence({ 
+            []() {Conversation::getInstance().beginConversation(Text(L"* 存档已保存（由于你在 帮助 中，其实并没有）。"));
+            } });
+        ConversationSequence::getInstance().startConversation();
+        }, 0);
+    addEntity("Savepoint", savepoint);
+
     Entity* airwallTop = new Entity("AirwallTop", 0, MAIN_PLAYER_HEIGHT-30, { 0,0,width,10 }, false),
         * airwallLeft = new Entity("AirwallLeft", -10, 0, { 0,0,10,height }, false),
         * airwallBottom = new Entity("AirwallBottom", 0, height, { 0,0,width,10 }, false),
@@ -321,6 +335,7 @@ Room_Help::~Room_Help() {
     Canvas::getInstance().deleteObject("Tip1");
     Canvas::getInstance().deleteObject("Tip2");
     Canvas::getInstance().deleteObject("Tip3");
+    Canvas::getInstance().deleteObject("Tip4");
     
     GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setSpeedX(0);
     GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setSpeedY(0);

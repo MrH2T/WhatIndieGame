@@ -106,6 +106,9 @@ void Entity::setSpeedX(int vx) {
 void Entity::setSpeedY(int vy) {
 	v_y = vy;
 }
+void Entity::setLayer(int layer) {
+	Canvas::getInstance().setLayer(draw_obj,layer);
+}
 void Entity::setPos(Coord pos,bool force) {
 	pos_x = pos.x;
 	pos_y = pos.y;
@@ -182,4 +185,10 @@ void Entity::delEvents() {
 		EventManager::getInstance().unsubscribe(i.second, i.first);
 	}
 	events.clear();
+}
+bool Entity::isOnCollide() {
+	return onCollide;
+}
+void Entity::setOnCollide(bool c) {
+	onCollide = c;
 }

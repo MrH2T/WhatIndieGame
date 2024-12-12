@@ -55,71 +55,72 @@ void Room_Mainmenu::roomInit() {
         600, 500, { 0,0,200,40 }, 9, DRAW_ABSOLUTE | DRAW_VISIBLE));
     cv.addObject("MainmenuExit", DrawableObject(Text(L"ÍË³ö", RGB(255, 255, 255), RGB(0, 0, 0), L"Simsun", 40), 
         600, 550, { 0,0,200,40 }, 9, DRAW_ABSOLUTE | DRAW_VISIBLE));
-    ev.subscribe("UP_PRESS", "MainMenuUp", [&]() {
-        if(localVar["choice"] > 0)localVar["choice"]--,AudioManager::getInstance().playSound("SND_CHOOSE");;
-        cv.getObject("MainmenuResume").text.setTColor(RGB(255, 255, 255));
-        cv.getObject("MainmenuRestart").text.setTColor(RGB(255, 255, 255));
-        cv.getObject("MainmenuHelp").text.setTColor(RGB(255, 255, 255));
-        cv.getObject("MainmenuExit").text.setTColor(RGB(255, 255, 255));
-        switch (localVar["choice"]) {
-        case 0:
-            cv.getObject("MainmenuResume").text.setTColor(RGB(255, 255, 0));
-            break;
-        case 1:
-            cv.getObject("MainmenuRestart").text.setTColor(RGB(255, 255, 0));
-            break;
-        case 2:
-            cv.getObject("MainmenuHelp").text.setTColor(RGB(255, 255, 0));
-            break;
-        case 3:
-            cv.getObject("MainmenuExit").text.setTColor(RGB(255, 255, 0));
-            break;
-        default:
-            break;
-        }
-        });
-    ev.subscribe("DOWN_PRESS", "MainMenuDown", [&]() {
-        if (localVar["choice"] < 3 )localVar["choice"]++,AudioManager::getInstance().playSound("SND_CHOOSE");;
-        cv.getObject("MainmenuResume").text.setTColor(RGB(255, 255, 255));
-        cv.getObject("MainmenuRestart").text.setTColor(RGB(255, 255, 255));
-        cv.getObject("MainmenuHelp").text.setTColor(RGB(255, 255, 255));
-        cv.getObject("MainmenuExit").text.setTColor(RGB(255, 255, 255));
-        switch (localVar["choice"]) {
-        case 0:
-            cv.getObject("MainmenuResume").text.setTColor(RGB(255, 255, 0));
-            break;
-        case 1:
-            cv.getObject("MainmenuRestart").text.setTColor(RGB(255, 255, 0));
-            break;
-        case 2:
-            cv.getObject("MainmenuHelp").text.setTColor(RGB(255, 255, 0));
-            break;
-        case 3:
-            cv.getObject("MainmenuExit").text.setTColor(RGB(255, 255, 0));
-            break;
-        default:
-            break;
-        }
-        });
-    ev.subscribe("Z_PRESS", "MainMenuZ", [&]() {
+    GameManager::getInstance().addWaiting([&]() {
+        ev.subscribe("UP_PRESS", "MainMenuUp", [&]() {
+            if (localVar["choice"] > 0)localVar["choice"]--, AudioManager::getInstance().playSound("SND_CHOOSE");;
+            cv.getObject("MainmenuResume").text.setTColor(RGB(255, 255, 255));
+            cv.getObject("MainmenuRestart").text.setTColor(RGB(255, 255, 255));
+            cv.getObject("MainmenuHelp").text.setTColor(RGB(255, 255, 255));
+            cv.getObject("MainmenuExit").text.setTColor(RGB(255, 255, 255));
+            switch (localVar["choice"]) {
+            case 0:
+                cv.getObject("MainmenuResume").text.setTColor(RGB(255, 255, 0));
+                break;
+            case 1:
+                cv.getObject("MainmenuRestart").text.setTColor(RGB(255, 255, 0));
+                break;
+            case 2:
+                cv.getObject("MainmenuHelp").text.setTColor(RGB(255, 255, 0));
+                break;
+            case 3:
+                cv.getObject("MainmenuExit").text.setTColor(RGB(255, 255, 0));
+                break;
+            default:
+                break;
+            }
+            });
+        ev.subscribe("DOWN_PRESS", "MainMenuDown", [&]() {
+            if (localVar["choice"] < 3)localVar["choice"]++, AudioManager::getInstance().playSound("SND_CHOOSE");;
+            cv.getObject("MainmenuResume").text.setTColor(RGB(255, 255, 255));
+            cv.getObject("MainmenuRestart").text.setTColor(RGB(255, 255, 255));
+            cv.getObject("MainmenuHelp").text.setTColor(RGB(255, 255, 255));
+            cv.getObject("MainmenuExit").text.setTColor(RGB(255, 255, 255));
+            switch (localVar["choice"]) {
+            case 0:
+                cv.getObject("MainmenuResume").text.setTColor(RGB(255, 255, 0));
+                break;
+            case 1:
+                cv.getObject("MainmenuRestart").text.setTColor(RGB(255, 255, 0));
+                break;
+            case 2:
+                cv.getObject("MainmenuHelp").text.setTColor(RGB(255, 255, 0));
+                break;
+            case 3:
+                cv.getObject("MainmenuExit").text.setTColor(RGB(255, 255, 0));
+                break;
+            default:
+                break;
+            }
+            });
+        ev.subscribe("Z_PRESS", "MainMenuZ", [&]() {
 
-        AudioManager::getInstance().playSound("SND_CHOOSE_BIG");
-        switch (localVar["choice"]) {
-        case 0:
-            gm.readSaving();
-            break;
-        case 1:
-            gm.newGame();
-            break;
-        case 2:
-            gm.helpRoom();
-            break;
-        case 3:
-            gm.gameEscape();
-            break;
-        }
-        return;
-        });
+            AudioManager::getInstance().playSound("SND_CHOOSE_BIG");
+            switch (localVar["choice"]) {
+            case 0:
+                gm.readSaving();
+                break;
+            case 1:
+                gm.newGame();
+                break;
+            case 2:
+                gm.helpRoom();
+                break;
+            case 3:
+                gm.gameEscape();
+                break;
+            }
+            return;
+            }); }, 0);
 
 }
 Room_Mainmenu::~Room_Mainmenu() {

@@ -60,6 +60,8 @@ public:
 	void deleteObject(std::string identifier);	
 	//get an obj and modify
 	DrawableObject& getObject(std::string identifier);
+
+	void setLayer(std::string identifier, int layer);
 	
 	//handle all click events
 	//void handleClickEvent(int mouseX,int mouseY);

@@ -36,6 +36,7 @@ void Room::calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::
 	HDC hdcDest = CreateCompatibleDC(NULL);
 	HDC hdcSrc = CreateCompatibleDC(NULL);
 	int rows = tile_info.size(),cols= tile_info[0].size();
+	for (int i = 0; i < rows; i++)cols = std::max(cols, (int)tile_info[i].size());
 	width = cols*TILE_GAME_SIZE;
 	height = rows * TILE_GAME_SIZE;
 	SelectObject(hdcSrc,tiles);
@@ -46,6 +47,7 @@ void Room::calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
 			//SelectObject(hdcSrc, tileSet[tile_info[i][j]]);
+			if (j >= tile_info[i].size())continue;
 			if (tile_info[i][j] == -1)continue;
 			int srcR =tile_info[i][j]/setcols, srcC = tile_info[i][j] % setcols;
 			StretchBlt(hdcDest,j*TILE_GAME_SIZE, i * TILE_GAME_SIZE, TILE_GAME_SIZE,TILE_GAME_SIZE,

@@ -365,6 +365,13 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("TORIEL_IMAGES", bitmap(TORIEL_BMP));
     rs.loadResource("SAVEPOINT", bitmap(SAVEPOINT_BMP));
     rs.loadResource("TORIEL_FACE", bitmap(TORIEL_FACE_BMP));
+    rs.loadResource("RUINS_TILESET", bitmap(RUINS_TILESET_BMP));
+    rs.loadResource("SPIKE", bitmap(SPIKE_BMP));
+    rs.loadResource("BG_FALLDOWN", bitmap(FALLDOWN_ROOM_BMP));
+    rs.loadResource("NIKO_SHOCK_FACE", bitmap(NIKO_SHOCK_FACE_BMP));
+    rs.loadResource("CANDYDISH", bitmap(CANDYDISH_BMP));
+    rs.loadResource("FROGGIT", bitmap(FROGGIT_BMP));
+    rs.loadResource("NIKO_SPEAK_FACE", bitmap(NIKO_SPEAK_FACE_BMP));
 
     
 #pragma endregion
@@ -382,12 +389,14 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("SND_ITEMUSE", "Resource/Audio/snd_itemuse.wav", 1);
     am.loadAudio("SND_SAVING", "Resource/Audio/snd_saving.wav", 1);
     am.loadAudio("SND_TORIEL_SPEAK", "Resource/Audio/snd_toriel_speak.wav", 1);
+    am.loadAudio("SND_SPIKEOPEN", "Resource/Audio/snd_spikeopen.wav", 1);
 
     am.loadAudio("BGM_SANS", "Resource/Audio/bgm_sans.wav");
     am.loadAudio("BGM_SNOWTOWN", "Resource/Audio/bgm_snowtown.wav");
     am.loadAudio("BGM_BATTLE", "Resource/Audio/bgm_battle.wav");
     am.loadAudio("BGM_GAMEOVER", "Resource/Audio/bgm_gameover.ogg");
     am.loadAudio("BGM_MAINMENU", "Resource/Audio/bgm_mainmenu.ogg");
+    am.loadAudio("BGM_RUINS", "Resource/Audio/bgm_ruins.ogg");
 
 #pragma endregion
 

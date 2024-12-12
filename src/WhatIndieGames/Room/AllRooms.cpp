@@ -13,7 +13,16 @@ Room* getRoom(int roomid) {
 		return new Room_Mainmenu();
 	case ROOM_HELP:
 		return new Room_Help();
+	case ROOM_FALLDOWN:
+		return new Room_Falldown();
+	case ROOM_RUINS_PUZZLE:
+		return new Room_Ruins_Puzzle();
+	case ROOM_RUINS_BATTLE:
+		return new Room_Ruins_Battle();
+	case ROOM_RUINS_CANDY:
+		return new Room_Ruins_Candy();
 	}
+	
 	return NULL;
 }
 

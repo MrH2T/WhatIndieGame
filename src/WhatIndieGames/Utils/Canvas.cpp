@@ -223,3 +223,9 @@ void Canvas::revealYourself() {
 	fprintf(dbg, "\n");
 	fclose(dbg);
 }
+void Canvas::setLayer(std::string identifier, int layer) {
+	auto &obj = getObject(identifier);
+	layers[obj.priority].erase(identifier);
+	layers[layer][identifier] = 1;
+	obj.setPriority(layer);
+}
