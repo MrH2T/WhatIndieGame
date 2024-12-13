@@ -5,10 +5,10 @@
 std::vector<Animation> groupBy4(HBITMAP image, int width, int height) {
 	Animation allanimF = Animation(image, 16, 4, 4, width, height);
 	Animation allanim4F = Animation(image, 4, 4, 1, width*4,height);
-	return { Animation(allanim4F.getFrame(0),4,1,4,23,30),
-		Animation(allanim4F.getFrame(1),4,1,4,23,30),
-		Animation(allanim4F.getFrame(2),4,1,4,23,30),
-		Animation(allanim4F.getFrame(3),4,1,4,23,30) };
+	return { Animation(allanim4F.getFrame(0),4,1,4,width,height,3),
+		Animation(allanim4F.getFrame(1),4,1,4,width,height,3),
+		Animation(allanim4F.getFrame(2),4,1,4,width,height,3),
+		Animation(allanim4F.getFrame(3),4,1,4,width,height,3) };
 	
 }
 std::vector<Animation> firstColumn(HBITMAP image, int width, int height){
@@ -125,6 +125,8 @@ void GameManager::updateEntityPositions() {
 Coord GameManager::getSize() {
 	switch (globalVar[GLOBAL_GAME_STATE]) {
 	case GAME_STATE_COMMON:
+		return { curRoom->getWidth(),curRoom->getHeight() };
+	case GAME_STATE_CUTSCENE:
 		return { curRoom->getWidth(),curRoom->getHeight() };
 	//case GAME_STATE_CONVERSATION:
 	//	return { curRoom->getWidth(),curRoom->getHeight() };
@@ -297,7 +299,7 @@ void GameManager::newGame() {
 	savingVar[GLOBAL_PLAYER_LV] = 0;
 	savingVar[GLOBAL_KILLS] = 0;
 	
-	setRoom(ROOM_TEST);
+	setRoom(ROOM_FIRST);
 }
 
 void GameManager::helpRoom() {

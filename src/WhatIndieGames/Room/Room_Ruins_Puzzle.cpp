@@ -193,6 +193,11 @@ void Room_Ruins_Puzzle::roomInit() {
         GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 1;
         GameManager::getInstance().setRoom(ROOM_RUINS_BATTLE); }, 1);
     addEntity("Portal", portal);
+    Entity* portal2 = new Entity("Portal2", 730, 160, { 0,0,5,100 }, true);
+    portal2->setReaction([&]() {
+        GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 0;
+        GameManager::getInstance().setRoom(ROOM_RUINS_TORIEL); }, 1);
+    addEntity("Portal2", portal2);
 }
 Room_Ruins_Puzzle::~Room_Ruins_Puzzle() {
     //MessageBoxA(0, "FUCKYOU", "FUCK", 0);

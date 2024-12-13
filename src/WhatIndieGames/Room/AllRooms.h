@@ -17,7 +17,9 @@
 #define ROOM_RUINS_PUZZLE 7
 #define ROOM_RUINS_TORIEL 8
 #define ROOM_RUINS_HOME 9
-#define ROOM_RUINS_TBATTLE 10
+#define ROOM_RUINS_PUZZLE_2 10
+
+#define ROOM_RUINS_SECRET 101
 
 #define CUTSCENE_FALLING 201
 
@@ -99,5 +101,25 @@ public:
 	virtual void roomUpdate();
 };
 
+class Room_Ruins_Toriel :public Room {
+public:
+	Room_Ruins_Toriel();
+	~Room_Ruins_Toriel();
+	virtual void roomInit();
+	virtual void roomUpdate();
+};
+class Room_Ruins_Home :public Room {
+public:
+	Room_Ruins_Home();
+	~Room_Ruins_Home();
+	virtual void roomInit();
+};
+class Room_Ruins_Puzzle_2 :public Room {
+public:
+	Room_Ruins_Puzzle_2();
+	~Room_Ruins_Puzzle_2();
+	virtual void roomInit();
+	virtual void roomUpdate();
+};
 
 Room* getRoom(int roomid);

@@ -55,6 +55,11 @@
 #define START_TILESET_BMP	 			153
 #define NIKO_SURPRISED_FACE_BMP 		154
 #define GREEN_GLITCH_BMP		 		155
+#define NIKO_DISTRESSED_FACE_BMP		156
+#define NIKO_SAD_FACE_BMP		 		157
+#define NIKO_CRY_FACE_BMP		 		158
+#define HOME_BMP		 				159
+#define CHAIRIEL_BMP	 				160
 
 
 

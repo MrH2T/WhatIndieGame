@@ -19,6 +19,11 @@ void Room::addEntity(std::string entname, Entity* ent) {
 	GameManager::getInstance().addEntity(entname, ent);
 
 }
+void Room::addEntity( Entity* ent) {
+	entities[ent->getName()] = ent;
+	GameManager::getInstance().addEntity(ent->getName(), ent);
+
+}
 void Room::deleteEntity(std::string entname) {
 	delete entities[entname];
 	entities.erase(entname);

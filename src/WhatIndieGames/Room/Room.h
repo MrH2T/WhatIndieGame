@@ -19,6 +19,7 @@ public:
 	int getWidth();
 	int getHeight();
 	void addEntity(std::string entname, Entity* ent);
+	void addEntity(Entity* ent);
 	void deleteEntity(std::string entname);
 	Entity* getEntity(std::string entname);
 	std::unordered_map<std::string, int> localVar;

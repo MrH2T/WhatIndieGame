@@ -36,6 +36,6 @@ void Cutscene_Falling::roomUpdate() {
         int dis = localVar["distance"];
         auto ent = entities["NikoFalling"];
         ent->setPos({ 448 - dis / 3,500 - dis },1);
-        ent->resizeDrawbox({ 0,0,2 * dis / 3, dis / 3 });
+        ent->resizeDrawbox({ 0,0,2 * dis / 3, 2* dis / 3 });
     }
 }

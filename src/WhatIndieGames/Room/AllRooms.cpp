@@ -23,6 +23,12 @@ Room* getRoom(int roomid) {
 		return new Room_Ruins_Battle();
 	case ROOM_RUINS_CANDY:
 		return new Room_Ruins_Candy();
+	case ROOM_RUINS_TORIEL:
+		return new Room_Ruins_Toriel();
+	case ROOM_RUINS_HOME:
+		return new Room_Ruins_Home();
+	case ROOM_RUINS_PUZZLE_2:
+		return new Room_Ruins_Puzzle_2();
 		
 	case CUTSCENE_FALLING:
 		return new Cutscene_Falling();

@@ -65,6 +65,9 @@ void Entity::setReaction(std::function<void()> react_func,int type) {
 	if(type==0)react = true;
 	if (type == 1)collide = true;
 }
+std::string Entity::getName() {
+	return name;
+}
 Coord Entity::getPos() {
 	return { pos_x,pos_y };
 }

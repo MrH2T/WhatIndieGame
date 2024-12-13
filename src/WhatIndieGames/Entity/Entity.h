@@ -27,6 +27,7 @@ public:
 	Entity(std::string name_, int posx, int posy, RECT c_box, bool pass = false);
 	Entity(std::string name_, int posx, int posy, RECT c_box, RECT d_box,Animation anim,bool pass=false);
 	RECT getCollisionBox();
+	std::string getName();
 	bool isPassable();
 	bool isReact();
 	bool isCollide();

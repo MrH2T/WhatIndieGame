@@ -375,9 +375,18 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("START_TILESET", bitmap(START_TILESET_BMP));
     rs.loadResource("NIKO_SURPRISED_FACE", bitmap(NIKO_SURPRISED_FACE_BMP));
     rs.loadResource("GREEN_GLITCH", bitmap(GREEN_GLITCH_BMP));
+    rs.loadResource("NIKO_DISTRESSED_FACE", bitmap(NIKO_DISTRESSED_FACE_BMP));
+    rs.loadResource("NIKO_SAD_FACE", bitmap(NIKO_SAD_FACE_BMP));
+    rs.loadResource("NIKO_CRY_FACE", bitmap(NIKO_CRY_FACE_BMP));
+    rs.loadResource("HOME_BACKGROUND", bitmap(HOME_BMP));
+    rs.loadResource("CHAIRIEL", bitmap(CHAIRIEL_BMP));
 
     
 #pragma endregion
+
+    EventManager::getInstance().subscribe("V_PRESS", "dbg", []() {GameManager::getInstance().setRoom(ROOM_RUINS_TORIEL); });
+
+
 
 #pragma region AudioLoading
     auto& am = AudioManager::getInstance();
@@ -403,6 +412,8 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("BGM_MAINMENU", "Resource/Audio/bgm_mainmenu.ogg");
     am.loadAudio("BGM_RUINS", "Resource/Audio/bgm_ruins.ogg");
     am.loadAudio("BGM_STRANGE", "Resource/Audio/bgm_strange.ogg");
+    am.loadAudio("BGM_TORIEL", "Resource/Audio/bgm_toriel.ogg");
+    am.loadAudio("BGM_HOME", "Resource/Audio/bgm_home.ogg");
 
 #pragma endregion
 
@@ -632,7 +643,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
 
 #pragma region ItemRegistering
     auto& ir = ItemManager::getInstance();
-    ir.registerItem("怪物糖果", Item("怪物糖果", "回复5HP", []() {
+    ir.registerItem("怪物糖果", Item("怪物糖果", "回复 5 HP", []() {
         auto& gm = GameManager::getInstance();
         gm.addHP(5);
         AudioManager::getInstance().playSound("SND_ITEMUSE");
@@ -645,7 +656,20 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             ConversationSequence::getInstance().startBattleConv();
         }
         }));
-    ir.registerItem("派", Item("派", "回复90HP", []() {
+    ir.registerItem("巧克力", Item("巧克力", "回复 15 HP", []() {
+        auto& gm = GameManager::getInstance();
+        gm.addHP(15);
+        AudioManager::getInstance().playSound("SND_ITEMUSE");
+        if (gm.globalVar[GLOBAL_GAME_STATE] == GAME_STATE_BATTLE) {
+            auto& conv = Conversation::getInstance();
+            ConversationSequence::getInstance().setSequence({
+                [&]() {conv.beginConversation(Text(L"* 恢复了 15 HP.")); },
+                [&]() {ConversationSequence::getInstance().stopBattleConv(); Battle::getInstance().switchState(BATTLE_DIALOG); }
+                });
+            ConversationSequence::getInstance().startBattleConv();
+        }
+        }));
+    ir.registerItem("派", Item("派", "回复 90 HP", []() {
         auto& gm = GameManager::getInstance();
         gm.addHP(90);
         AudioManager::getInstance().playSound("SND_ITEMUSE");
