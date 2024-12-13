@@ -2,7 +2,7 @@
 #include"../Utils/Conversation.h"
 
 
-Room_Ruins_Candy::Room_Ruins_Candy() :Room(ROOM_RUINS_PUZZLE, NULL, 19 * TILE_GAME_SIZE, 14 * TILE_GAME_SIZE) {
+Room_Ruins_Candy::Room_Ruins_Candy() :Room(ROOM_RUINS_CANDY, NULL, 19 * TILE_GAME_SIZE, 14 * TILE_GAME_SIZE) {
     roomInit();
 }
 void Room_Ruins_Candy::roomInit() {

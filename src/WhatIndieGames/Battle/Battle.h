@@ -167,7 +167,7 @@ public:
 	std::vector<std::pair<std::string,std::function<void()>>> actions;
 	std::map<std::string, int> localVar;
 	std::function<bool()> mercible;
-	std::string text;
+	Text text;
 	std::string enemy_name;
 	int press_height; 
 	int enemy_hp,enemy_def,enemy_maxhp;

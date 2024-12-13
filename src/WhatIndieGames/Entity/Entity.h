@@ -31,6 +31,7 @@ public:
 	bool isReact();
 	bool isCollide();
 	bool isOnCollide();
+	bool isVisible();
 	int getStatus();
 	int getType();
 	int getDirection();
@@ -44,6 +45,7 @@ public:
 	void setPos(Coord pos,bool force=0);
 	void setDrawYPrioBias(int ypriobias);
 	void setLayer(int layer);
+	void resizeDrawbox(RECT d_box);
 	//type0:react, type1:collide
 	void setReaction(std::function<void()> react_func,int type);
 	void updatePosition();

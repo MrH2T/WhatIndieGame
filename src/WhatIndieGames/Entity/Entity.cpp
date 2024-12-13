@@ -68,6 +68,9 @@ void Entity::setReaction(std::function<void()> react_func,int type) {
 Coord Entity::getPos() {
 	return { pos_x,pos_y };
 }
+bool Entity::isVisible() {
+	return visible;
+}
 int Entity::getType() {
 	return type;
 }
@@ -99,6 +102,10 @@ RECT Entity::getCollisionBox() {
 }
 int Entity::getStatus() {
 	return status;
+}
+void Entity::resizeDrawbox(RECT d_box) {
+	draw_box = d_box;
+	Canvas::getInstance().getObject(draw_obj).expandBox = d_box;
 }
 void Entity::setSpeedX(int vx) {
 	v_x = vx;

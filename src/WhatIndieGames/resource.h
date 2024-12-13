@@ -52,6 +52,9 @@
 #define CANDYDISH_BMP					150
 #define FROGGIT_BMP						151
 #define NIKO_SPEAK_FACE_BMP 			152
+#define START_TILESET_BMP	 			153
+#define NIKO_SURPRISED_FACE_BMP 		154
+#define GREEN_GLITCH_BMP		 		155
 
 
 

@@ -113,7 +113,7 @@ void Room_Help::roomInit() {
                         int& turn = bt.localVar["TURN"];
                         turn++;
 
-                        bt.text = "* 真是一场紧张刺激的战斗呢。";
+                        bt.text = Text(L"* 真是一场紧张刺激的战斗呢。");
                         ev.subscribe("BATTLE_DIALOG_START", "BattleDialogCheck", [&]() {
                             bt.setConv(ConvSeq{
                                 [&]() {

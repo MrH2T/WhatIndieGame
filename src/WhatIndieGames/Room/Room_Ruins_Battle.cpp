@@ -151,8 +151,8 @@ void Room_Ruins_Battle::roomInit() {
                             int& turn = bt.localVar["TURN"];
                             turn++;
 
-                            if (Battle::getInstance().mercible())bt.text = "* Froggit 不想战斗了。";
-                            else bt.text = "* Froggit 突然出现。";
+                            if (Battle::getInstance().mercible())bt.text = Text(L"* Froggit 不想战斗了。",RGB(255,255,0));
+                            else bt.text = Text(L"* Froggit 突然出现。");
                             ev.subscribe("BATTLE_DIALOG_START", "BattleDialogCheck", [&]() {
                                 bt.setConv(ConvSeq{
                                     [&]() {

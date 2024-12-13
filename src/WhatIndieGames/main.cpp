@@ -372,6 +372,9 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("CANDYDISH", bitmap(CANDYDISH_BMP));
     rs.loadResource("FROGGIT", bitmap(FROGGIT_BMP));
     rs.loadResource("NIKO_SPEAK_FACE", bitmap(NIKO_SPEAK_FACE_BMP));
+    rs.loadResource("START_TILESET", bitmap(START_TILESET_BMP));
+    rs.loadResource("NIKO_SURPRISED_FACE", bitmap(NIKO_SURPRISED_FACE_BMP));
+    rs.loadResource("GREEN_GLITCH", bitmap(GREEN_GLITCH_BMP));
 
     
 #pragma endregion
@@ -390,6 +393,8 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("SND_SAVING", "Resource/Audio/snd_saving.wav", 1);
     am.loadAudio("SND_TORIEL_SPEAK", "Resource/Audio/snd_toriel_speak.wav", 1);
     am.loadAudio("SND_SPIKEOPEN", "Resource/Audio/snd_spikeopen.wav", 1);
+    am.loadAudio("SND_FALL_LAND", "Resource/Audio/snd_fall_land.wav", 1);
+    am.loadAudio("SND_FALLING", "Resource/Audio/snd_falling.wav", 1);
 
     am.loadAudio("BGM_SANS", "Resource/Audio/bgm_sans.wav");
     am.loadAudio("BGM_SNOWTOWN", "Resource/Audio/bgm_snowtown.wav");
@@ -397,6 +402,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("BGM_GAMEOVER", "Resource/Audio/bgm_gameover.ogg");
     am.loadAudio("BGM_MAINMENU", "Resource/Audio/bgm_mainmenu.ogg");
     am.loadAudio("BGM_RUINS", "Resource/Audio/bgm_ruins.ogg");
+    am.loadAudio("BGM_STRANGE", "Resource/Audio/bgm_strange.ogg");
 
 #pragma endregion
 
@@ -658,6 +664,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
 #pragma region EventRegistering
     // Pause Event
     EventManager::getInstance().subscribe("ESC_PRESS", "GamePause", [&]() {
+
         if (GameManager::getInstance().globalVar[GLOBAL_MENUING])return;
         if (GameManager::getInstance().globalVar[GLOBAL_BATTLE_PREPARING])return;
         Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
@@ -691,6 +698,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
                 ||GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;
             Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+            if (!ent->isVisible())return;
             //ent->setDirection(DIRECTION_DOWN);
             ent->setSpeedY(SPEED);
             //ent->setStatus(ENTITY_WALKING);
@@ -701,6 +709,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
                 || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;
             Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+            if (!ent->isVisible())return;
             //ent->setDirection(DIRECTION_LEFT);
             ent->setSpeedX(-SPEED);
             //ent->setStatus(ENTITY_WALKING);
@@ -711,6 +720,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
                 || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;
             Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+            if (!ent->isVisible())return;
             //ent->setDirection(DIRECTION_UP);
             ent->setSpeedY(-SPEED);
             //ent->setStatus(ENTITY_WALKING);
@@ -721,6 +731,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
                 || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            
             Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+            if (!ent->isVisible())return;
             //ent->setDirection(DIRECTION_RIGHT);
             ent->setSpeedX(SPEED);
             //ent->setStatus(ENTITY_WALKING);
@@ -767,6 +778,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             if (GameManager::getInstance().globalVar[GLOBAL_PAUSED] == 1 || GameManager::getInstance().globalVar[GLOBAL_MENUING] == 1
                 || GameManager::getInstance().globalVar[GLOBAL_INCONVERSATION] == 1)return;            
             Entity* ent = GameManager::getInstance().entities[ENTITY_MAIN_PLAYER];
+            if (!ent->isVisible())return;
             switch (GameManager::getInstance().globalVar[GLOBAL_GAME_STATE]) {
             case GAME_STATE_COMMON:
                 GameManager::getInstance().reactCheck();

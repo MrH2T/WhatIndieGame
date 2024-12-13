@@ -14,7 +14,7 @@ public:
 	virtual ~Room() { clearEntities(); }
 	virtual void roomUpdate() { }
 	void loadMap(HBITMAP pic,int width_,int height_);
-	void calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::vector<int>> tile_info);
+	void calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::vector<int>> tile_info,int size=TILE_FILE_SIZE);
 	virtual void roomInit() {};
 	int getWidth();
 	int getHeight();

@@ -6,7 +6,6 @@ Room_Falldown::Room_Falldown() :Room(ROOM_FALLDOWN, NULL, 680*2, 260*2) {
 void Room_Falldown::roomInit() {
     AudioManager::getInstance().stopBgm();
     map = ResourceManager::getInstance().getResource("BG_FALLDOWN");
-
     auto& cv = Canvas::getInstance();
     auto& ev = EventManager::getInstance();
     auto& gm = GameManager::getInstance();
@@ -71,10 +70,12 @@ void Room_Falldown::roomInit() {
                 [&]() {ConversationSequence::getInstance().stopConversation();  gm.globalVar[GLOBAL_GAME_STATE] = GAME_STATE_COMMON; }
                 });
             ConversationSequence::getInstance().startConversation();
-            }, 20);
+            }, 40);
         gm.globalVar[GLOBAL_GAME_STATE] = GAME_STATE_CUTSCENE;
         gm.savingVar["ROOM_FALLDOWN_ARRIVE"] = 1;
     }
+
+    AudioManager::getInstance().playSound("SND_FALL_LAND");
 }
 Room_Falldown::~Room_Falldown() {
     clearEntities();;

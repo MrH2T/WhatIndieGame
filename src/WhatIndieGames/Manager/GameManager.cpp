@@ -256,6 +256,7 @@ bool GameManager::readSaving(){
 	std::ifstream saving("saving.txt");
 	if (!saving.good())return false;
 	inventory.clear();
+	savingVar.clear();
 	int rmid = 0;
 	saving >> rmid;
 	for (int i = 0; i < 8; i++) {

@@ -32,7 +32,7 @@ void Room::loadMap(HBITMAP pic, int width_, int height_) {
 	width = width_;
 	height = height_;
 }
-void Room::calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::vector<int>> tile_info) {
+void Room::calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::vector<int>> tile_info,int size) {
 	HDC hdcDest = CreateCompatibleDC(NULL);
 	HDC hdcSrc = CreateCompatibleDC(NULL);
 	int rows = tile_info.size(),cols= tile_info[0].size();
@@ -51,7 +51,7 @@ void Room::calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::
 			if (tile_info[i][j] == -1)continue;
 			int srcR =tile_info[i][j]/setcols, srcC = tile_info[i][j] % setcols;
 			StretchBlt(hdcDest,j*TILE_GAME_SIZE, i * TILE_GAME_SIZE, TILE_GAME_SIZE,TILE_GAME_SIZE,
-					hdcSrc, srcC * TILE_FILE_SIZE, srcR*TILE_FILE_SIZE,  TILE_FILE_SIZE,TILE_FILE_SIZE, SRCCOPY);
+					hdcSrc, srcC * size, srcR* size, size, size, SRCCOPY);
 			/*StretchBlt(hdcDest, i * TILE_GAME_SIZE, j * TILE_GAME_SIZE, TILE_GAME_SIZE, TILE_GAME_SIZE,
 				hdcSrc, 0, 0, TILE_FILE_SIZE, TILE_FILE_SIZE, SRCCOPY);*/
 		}

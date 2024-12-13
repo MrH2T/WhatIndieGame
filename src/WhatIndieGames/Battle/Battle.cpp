@@ -530,6 +530,7 @@ void Battle::switchState(int st) {
 		cv.getObject("Battle_checkbox_2").switchState(DRAW_VISIBLE, 1);
 		cv.getObject(PLAYER_DRAWOBJ).anim=player_anims[0];
 		cv.getObject(PLAYER_DRAWOBJ).anim.setCurFrame(0);
+		localVar["LAST_HURT"] = 0;
 	}
 	battle_state = st;
 	if (st == BATTLE_DIALOG)EventManager::getInstance().emit("BATTLE_DIALOG_START");
@@ -537,6 +538,8 @@ void Battle::switchState(int st) {
 
 }
 void Battle::causeDamage(int dm) {
+	if (curAttack.curTime - localVar["LAST_HURT"] <= 25)return;
+	localVar["LAST_HURT"] = curAttack.curTime;
 	int realDamage = std::max(1, dm-GameManager::getInstance().savingVar[GLOBAL_PLAYER_DEF]);
 	GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] = std::max(0,
 		GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] - realDamage);
@@ -718,7 +721,7 @@ void Battle::drawingUpdate() {
 			cv.getObject("Battle_cursor").posY = BATTLE_ITEM_POS[item_choice][1];
 		}
 		if (choice_level == 0) {
-			cv.getObject("Battle_text").text.setContent(to_wide_string(text).c_str());
+			cv.getObject("Battle_text").text=text;
 		}
 		else {
 			for (int i = 0; i < 4; i++) {
@@ -796,7 +799,7 @@ void Battle::clearVars() {
 	item_func.clear();
 	mercible = NULL;
 	battle_state = 0;
-	text = "";
+	text = Text(L"");
 	button_choice = item_choice = choice_level = 0;
 	curAttack = Attack();
 	Canvas::getInstance().getObject("Battle_checkbox_0").anim.setCurFrame(0);

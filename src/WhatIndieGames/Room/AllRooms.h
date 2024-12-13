@@ -19,6 +19,9 @@
 #define ROOM_RUINS_HOME 9
 #define ROOM_RUINS_TBATTLE 10
 
+#define CUTSCENE_FALLING 201
+
+
 
 class Room_Test :public Room{
 public:
@@ -82,5 +85,19 @@ public:
 	~Room_Ruins_Candy();
 	virtual void roomInit();
 };
+class Room_First : public Room {
+public:
+	Room_First();
+	~Room_First();
+	virtual void roomInit();
+};
+class Cutscene_Falling : public Room {
+public:
+	Cutscene_Falling();
+	~Cutscene_Falling();
+	virtual void roomInit();
+	virtual void roomUpdate();
+};
+
 
 Room* getRoom(int roomid);

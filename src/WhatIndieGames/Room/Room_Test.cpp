@@ -75,7 +75,7 @@ void Room_Test::roomInit() {
                     typedef Battle::Attack::Bullet Bul;
                     ev.subscribe("BATTLE_NEW_TURN", "BattleTurnHandler", [&]() {
                         bt.switchState(BATTLE_ACTING);
-                        bt.text = "* 但谁也没有来";
+                        bt.text = Text(L"* 但谁也没有来");
                         auto it= bt.localVar.find("TURN");
                         if (it == bt.localVar.end())bt.localVar["TURN"] = 0;
 
@@ -161,7 +161,7 @@ void Room_Test::roomInit() {
     Entity* portal = new Entity("Portal", 500, 200, { 0,0,100,100 }, true);
     portal->setReaction([&]() {
         GameManager::getInstance().globalVar[ROOM_ENTRANCE]=0;
-        GameManager::getInstance().setRoom(ROOM_FALLDOWN,GAME_STATE_CUTSCENE); }, 1);
+        GameManager::getInstance().setRoom(ROOM_FIRST); }, 1);
     addEntity("Portal",portal);
 
     //GameManager::getInstance().savingVar[GLOBAL_PLAYER_MAXHP] = 10;
