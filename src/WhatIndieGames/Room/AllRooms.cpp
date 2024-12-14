@@ -29,6 +29,8 @@ Room* getRoom(int roomid) {
 		return new Room_Ruins_Home();
 	case ROOM_RUINS_PUZZLE_2:
 		return new Room_Ruins_Puzzle_2();
+	case ROOM_RUINS_SECRET:
+		return new Room_Ruins_Secret();
 		
 	case CUTSCENE_FALLING:
 		return new Cutscene_Falling();

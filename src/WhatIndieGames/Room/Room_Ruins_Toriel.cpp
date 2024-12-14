@@ -40,6 +40,8 @@ void Room_Ruins_Toriel::roomInit() {
         GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setDirection(DIRECTION_UP);
     }
 
+    gm.entities[ENTITY_MAIN_PLAYER]->setSpeedX(0);
+    gm.entities[ENTITY_MAIN_PLAYER]->setSpeedY(0);
     GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setVisible(true);
 
 
@@ -110,7 +112,6 @@ void Room_Ruins_Toriel::roomInit() {
 
 
 
-
     if (gm.savingVar.find("RUINS_TORIEL_TALKED") == gm.savingVar.end()) {
         Entity* toriel = new Entity("Toriel", 170, 410, { 0,52,25 * 2,52 * 2 }, { 0,0,25 * 2,52 * 2 },
             firstColumn(ResourceManager::getInstance().getResource("TORIEL_IMAGES"), 25, 52),
@@ -139,7 +140,7 @@ void Room_Ruins_Toriel::roomInit() {
             AudioManager::getInstance().stopBgm();
             AudioManager::getInstance().playSound("BGM_TORIEL",true);
             CS.setSequence({
-                [=]() {AudioManager::getInstance().playSound("SND_TORIEL_SPEAK"); C->beginConversation(Text(L"* 你好，你是新来到这里的吗？"),torielface); },
+                [=]() {AudioManager::getInstance().playSound("SND_TORIEL_SPEAK"); C->beginConversation(Text(L"* 你好，我是Toriel，这片遗迹的看守着。你是新来到这里的吗？"),torielface); },
                 [=]() {C->beginConversation(Text(L"* 是的，我好像正在看我的电脑，然后我就到了这里。"),niko_distressed); },
                 [=]() {C->beginConversation(Text(L"* 而且，我好像......"),niko_sad); },
                 [=]() {C->beginConversation(Text(L"* 不知道怎么出去......"),niko_cry); },

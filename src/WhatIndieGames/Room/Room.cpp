@@ -37,32 +37,36 @@ void Room::loadMap(HBITMAP pic, int width_, int height_) {
 	width = width_;
 	height = height_;
 }
-void Room::calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::vector<int>> tile_info,int size) {
+void Room::calculateMap(HBITMAP &mp, HBITMAP tiles, int setrows, int setcols, std::vector<std::vector<int>> tile_info, int size) {
 	HDC hdcDest = CreateCompatibleDC(NULL);
 	HDC hdcSrc = CreateCompatibleDC(NULL);
-	int rows = tile_info.size(),cols= tile_info[0].size();
+	int rows = tile_info.size(), cols = tile_info[0].size();
 	for (int i = 0; i < rows; i++)cols = std::max(cols, (int)tile_info[i].size());
-	width = cols*TILE_GAME_SIZE;
-	height = rows * TILE_GAME_SIZE;
-	SelectObject(hdcSrc,tiles);
-	map= CreateCompatibleBitmap(hdcSrc, width, height);
+	SelectObject(hdcSrc, tiles);
+	mp = CreateCompatibleBitmap(hdcSrc, cols * TILE_GAME_SIZE, rows * TILE_GAME_SIZE);
 
 	//std::vector<HBITMAP> tileSet = decomposeBitmap(tiles, rows, cols, TILE_FILE_SIZE, TILE_FILE_SIZE);
-	SelectObject(hdcDest, map);
+	SelectObject(hdcDest, mp);
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
 			//SelectObject(hdcSrc, tileSet[tile_info[i][j]]);
 			if (j >= tile_info[i].size())continue;
 			if (tile_info[i][j] == -1)continue;
-			int srcR =tile_info[i][j]/setcols, srcC = tile_info[i][j] % setcols;
-			StretchBlt(hdcDest,j*TILE_GAME_SIZE, i * TILE_GAME_SIZE, TILE_GAME_SIZE,TILE_GAME_SIZE,
-					hdcSrc, srcC * size, srcR* size, size, size, SRCCOPY);
+			int srcR = tile_info[i][j] / setcols, srcC = tile_info[i][j] % setcols;
+			StretchBlt(hdcDest, j * TILE_GAME_SIZE, i * TILE_GAME_SIZE, TILE_GAME_SIZE, TILE_GAME_SIZE,
+				hdcSrc, srcC * size, srcR * size, size, size, SRCCOPY);
 			/*StretchBlt(hdcDest, i * TILE_GAME_SIZE, j * TILE_GAME_SIZE, TILE_GAME_SIZE, TILE_GAME_SIZE,
 				hdcSrc, 0, 0, TILE_FILE_SIZE, TILE_FILE_SIZE, SRCCOPY);*/
 		}
 	}
 	DeleteDC(hdcDest);
 	DeleteDC(hdcSrc);
+}
+void Room::calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::vector<int>> tile_info,int size) {
+	calculateMap(map, tiles, setrows, setcols, tile_info, size);
+	int rows = tile_info.size(), cols = tile_info[0].size();
+	width = cols * TILE_GAME_SIZE;
+	height = rows * TILE_GAME_SIZE;
 }
 //void Room::roomInit() {
 //	initFunc();

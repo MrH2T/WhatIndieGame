@@ -60,6 +60,8 @@
 #define NIKO_CRY_FACE_BMP		 		158
 #define HOME_BMP		 				159
 #define CHAIRIEL_BMP	 				160
+#define KEY_BMP			 				161
+#define BENCH_BMP		 				162
 
 
 

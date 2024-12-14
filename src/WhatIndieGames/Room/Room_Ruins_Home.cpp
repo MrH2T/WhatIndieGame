@@ -154,9 +154,12 @@ void Room_Ruins_Home::roomInit() {
                     C->beginConversation(Text(L"* 我想给你一个我自己烤的派，但是你好像装不下了。"),torielface);
                         }
                 else {
-                    C->beginConversation(Text(L"* 这是我自己烤的派，尽情享用吧！"), torielface);
-                    GameManager::getInstance().addItem("派");
-                    GameManager::getInstance().savingVar["CHAIRIEL_TASK_FINISHED"] = 1;
+                    ConversationSequence::getInstance().setSequence({
+                        [=]() {C->beginConversation(Text(L"* 这是我自己烤的派，尽情享用吧！"), torielface); },
+                        [=]() {C->beginConversation(Text(L"* 你获得了 派。")); GameManager::getInstance().addItem("派");
+                    GameManager::getInstance().savingVar["CHAIRIEL_TASK_FINISHED"] = 1; }
+                        });
+                    ConversationSequence::getInstance().startConversation();
                 }
                     }
                     });

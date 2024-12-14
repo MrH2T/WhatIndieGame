@@ -22,7 +22,7 @@ void Room_Ruins_Puzzle_2::roomInit() {
         break;
     case 1:
 
-        GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setPos({ 640,180 });
+        GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setPos({ 630,130 });
         GameManager::getInstance().entities[ENTITY_MAIN_PLAYER]->setDirection(DIRECTION_LEFT);
         break;
     }
@@ -43,7 +43,7 @@ void Room_Ruins_Puzzle_2::roomInit() {
     for (int i = 0; i < 15; i++) {
         std::string namef = "Flower" + std::to_string(i);
         int r = i / 5, c = i % 5;
-        int posx = 80 + 120 * c, posy = 200 + 80 * r;
+        int posx = 80 + 120 * c, posy = 240 + 80 * r;
         flowers[i] = new Entity(namef, posx, posy, { 0,0,0,0 }, { 0,0,40,40 }, anim,anim);
         flowers[i]->setPassable(1);
         if (GameManager::getInstance().savingVar.find("RUINS_PUZZLE_2_SOLVED") == GameManager::getInstance().savingVar.end())
@@ -58,7 +58,7 @@ void Room_Ruins_Puzzle_2::roomInit() {
     for (int i = 0; i < 15; i++) {
         std::string nameb = "Board" + std::to_string(i);
         int r = i / 5, c = i % 5;
-        int posx = 120 + 120 * c, posy = 200 + 80 * r;
+        int posx = 120 + 120 * c, posy = 240 + 80 * r;
         boards[i] = new Entity(nameb, posx, posy, { 5,5,35,35 }, { 0,0,40,40 }, Animation(board, 1, 1, 1, 20, 20), true);
 
         boards[i]->setReaction(
@@ -134,11 +134,30 @@ void Room_Ruins_Puzzle_2::roomInit() {
         GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 2;
         GameManager::getInstance().setRoom(ROOM_RUINS_TORIEL); }, 1);
     addEntity("Portal", portal);
-    Entity* portal2 = new Entity("Portal2", 640, 200, { 0,0,5,40}, true);
+    Entity* portal2 = new Entity("Portal2", 710, 160, { 0,0,5,40}, true);
     portal2->setReaction([&]() {
         GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 0;
         GameManager::getInstance().setRoom(ROOM_RUINS_SECRET); }, 1);
-    //addEntity("Portal2", portal2);
+    addEntity("Portal2", portal2);
+
+    Entity* phone = new Entity("Phone", 260, 660, { 0,0,18,18 }, { 0,0,18,18 }, Animation(ResourceManager::getInstance().getResource("KEY"), 2, 1, 2, 9, 9,5));
+    phone->setDrawYPrioBias(-40);
+    phone->setReaction([&]() {
+        GameManager::getInstance().savingVar["CHAIRIEL_CELLPHONE"] = 1;
+        AudioManager::getInstance().playSound("SND_SAVING");
+        ConversationSequence::getInstance().setSequence({
+            []() {Conversation::getInstance().beginConversation(Text(L"* 你找到了 手机。（试着找到 Toriel 对话）")); },
+            [&]() {ConversationSequence::getInstance().stopConversation(); GameManager::getInstance().addWaiting([&]() {deleteEntity("Phone"); },1); }
+            });
+        ConversationSequence::getInstance().startConversation();
+        }, 0);
+    phone->setVisible(1);
+    if (GameManager::getInstance().savingVar.find("CHAIRIEL_CELLPHONE") == GameManager::getInstance().savingVar.end()) {
+        addEntity(phone);
+    }
+    else {
+        delete phone;
+    }
 }
 Room_Ruins_Puzzle_2::~Room_Ruins_Puzzle_2() {
     clearEntities();

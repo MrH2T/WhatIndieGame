@@ -121,5 +121,11 @@ public:
 	virtual void roomInit();
 	virtual void roomUpdate();
 };
+class Room_Ruins_Secret :public Room {
+public:
+	Room_Ruins_Secret();
+	~Room_Ruins_Secret();
+	virtual void roomInit();
+};
 
 Room* getRoom(int roomid);

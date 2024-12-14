@@ -380,11 +380,12 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("NIKO_CRY_FACE", bitmap(NIKO_CRY_FACE_BMP));
     rs.loadResource("HOME_BACKGROUND", bitmap(HOME_BMP));
     rs.loadResource("CHAIRIEL", bitmap(CHAIRIEL_BMP));
+    rs.loadResource("KEY", bitmap(KEY_BMP));
+    rs.loadResource("BENCH", bitmap(BENCH_BMP));
 
     
 #pragma endregion
 
-    EventManager::getInstance().subscribe("V_PRESS", "dbg", []() {GameManager::getInstance().setRoom(ROOM_RUINS_TORIEL); });
 
 
 
@@ -400,8 +401,8 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("SND_ENEMYHIT", "Resource/Audio/snd_enemyhit.wav", 1);
     am.loadAudio("SND_ITEMUSE", "Resource/Audio/snd_itemuse.wav", 1);
     am.loadAudio("SND_SAVING", "Resource/Audio/snd_saving.wav", 1);
-    am.loadAudio("SND_TORIEL_SPEAK", "Resource/Audio/snd_toriel_speak.wav", 1);
     am.loadAudio("SND_SPIKEOPEN", "Resource/Audio/snd_spikeopen.wav", 1);
+    am.loadAudio("SND_TORIEL_SPEAK", "Resource/Audio/snd_toriel_speak.wav", 1);
     am.loadAudio("SND_FALL_LAND", "Resource/Audio/snd_fall_land.wav", 1);
     am.loadAudio("SND_FALLING", "Resource/Audio/snd_falling.wav", 1);
 
@@ -414,13 +415,15 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("BGM_STRANGE", "Resource/Audio/bgm_strange.ogg");
     am.loadAudio("BGM_TORIEL", "Resource/Audio/bgm_toriel.ogg");
     am.loadAudio("BGM_HOME", "Resource/Audio/bgm_home.ogg");
+    am.loadAudio("BGM_HOTSPRING", "Resource/Audio/bgm_hotspring.ogg");
 
 #pragma endregion
 
     auto& cv = Canvas::getInstance();
     auto& ev = EventManager::getInstance();
 
-    cv.addObject("Debug", DrawableObject(Text(L""), 0, 0, {0,0,300,200}, 10, DRAW_ABSOLUTE | DRAW_VISIBLE));
+    cv.addObject("Debug", DrawableObject(Text(L""), 0, 0, {0,0,300,200}, 10, DRAW_ABSOLUTE|DRAW_VISIBLE ));
+    //EventManager::getInstance().subscribe("V_PRESS", "dbg", []() {GameManager::getInstance().setRoom(ROOM_RUINS_TORIEL); });
 
 
 #pragma region PauseMenuPrepare
