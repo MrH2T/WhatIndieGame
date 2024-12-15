@@ -281,7 +281,14 @@ bool GameManager::readSaving(){
 }
 
 void GameManager::gameOver() {
-	setRoom(ROOM_GAMEOVER,GAME_STATE_CUTSCENE);
+	if (curRoom->roomId() == ROOM_HELP) {
+		globalVar[ROOM_ENTRANCE] = 1;
+		setRoom(ROOM_GAMEOVER, GAME_STATE_CUTSCENE);
+	}
+	else {
+		globalVar[ROOM_ENTRANCE] = 0;
+		setRoom(ROOM_GAMEOVER,GAME_STATE_CUTSCENE);
+	}
 
 }
 void GameManager::goMainMenu() {

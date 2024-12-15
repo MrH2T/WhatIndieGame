@@ -169,7 +169,7 @@ public:
 	std::function<bool()> mercible;
 	Text text;
 	std::string enemy_name;
-	int press_height; 
+	int press_height,nbtime; 
 	int enemy_hp,enemy_def,enemy_maxhp;
 private:
 	Battle() { 

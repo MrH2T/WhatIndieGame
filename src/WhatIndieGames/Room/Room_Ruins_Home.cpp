@@ -53,7 +53,7 @@ void Room_Ruins_Home::roomInit() {
                 [=]() {C->beginConversation(Text(L"* 里面有一块巧克力")); },
                 [=]() {Conversation::getInstance().beginConversation(Text(L"              要拿一块吗？"),
                     Conversation::Choice(ChoiceItem({
-                    Text(L"拿一颗"),
+                    Text(L"拿一块"),
                     Text(L"不拿")
                     }),[](int res) {GameManager::getInstance().globalVar["Choose_Temp"] = res + 1; })); },
                 [=]() {

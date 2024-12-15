@@ -416,6 +416,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("BGM_TORIEL", "Resource/Audio/bgm_toriel.ogg");
     am.loadAudio("BGM_HOME", "Resource/Audio/bgm_home.ogg");
     am.loadAudio("BGM_HOTSPRING", "Resource/Audio/bgm_hotspring.ogg");
+    am.loadAudio("BGM_MEGALOVANIA", "Resource/Audio/bgm_megalovania.ogg");
 
 #pragma endregion
 

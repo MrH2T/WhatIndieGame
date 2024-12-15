@@ -162,9 +162,11 @@ void Battle::Attack::updateBullets() {
 	for(int i=0;i<3;i++)
 	{
 		for (int j = 0; j < temp1[i].size(); j++)bullet_going[i].push_back(temp1[i][j]);
+		sort(bullet_going[i].begin(), bullet_going[i].end(), [](Bullet a, Bullet b) {return a.posY < b.posY; });
 	}
 }
 void Battle::Attack::setBullets(std::vector<std::pair<int, Bullet>> bul) {
+	sort(bul.begin(), bul.end(), [](std::pair<int, Bullet> a, std::pair<int, Bullet> b) {return a.first < b.first; });
 	bullets = bul;
 }
 void Battle::Attack::moveBullet(int id, int posA, int posB, int posBY) {
@@ -382,6 +384,17 @@ void Battle::battleSysInit() {
 				}
 			}
 		}
+		else if (battleState() == BATTLE_BULLET) {
+			cv.getObject("Battle_checkbox_1").anim.setCurFrame(1);
+			curAttack.battleCheck(1);
+		}
+		});
+	ev.subscribe("DOWN_STOP", "BattleDS", [&]() {
+		if (GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] != GAME_STATE_BATTLE)return;
+		if (battleState() == BATTLE_BULLET) {
+			cv.getObject("Battle_checkbox_1").anim.setCurFrame(0);
+			curAttack.battleCheck(1, 1);
+		}
 		});
 	ev.subscribe("LEFT_PRESS", "BattleLP", [&]() {
 		if (GameManager::getInstance().globalVar[GLOBAL_GAME_STATE] != GAME_STATE_BATTLE)return;
@@ -538,7 +551,7 @@ void Battle::switchState(int st) {
 
 }
 void Battle::causeDamage(int dm) {
-	if (curAttack.curTime - localVar["LAST_HURT"] <= 25)return;
+	if (curAttack.curTime - localVar["LAST_HURT"] <= nbtime)return;
 	localVar["LAST_HURT"] = curAttack.curTime;
 	int realDamage = std::max(1, dm-GameManager::getInstance().savingVar[GLOBAL_PLAYER_DEF]);
 	GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] = std::max(0,

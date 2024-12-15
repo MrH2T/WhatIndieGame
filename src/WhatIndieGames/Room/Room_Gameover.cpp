@@ -32,6 +32,7 @@ void Room_Gameover::roomInit() {
         });
     ev.subscribe("Z_PRESS", "GameoverRoomZ", [&]() {
         if (localVar["choice"] == 0) {
+            if (GameManager::getInstance().globalVar[ROOM_ENTRANCE] == 1)GameManager::getInstance().setRoom(ROOM_MAINMENU);
             if (!GameManager::getInstance().readSaving())
             {
                 GameManager::getInstance().newGame();

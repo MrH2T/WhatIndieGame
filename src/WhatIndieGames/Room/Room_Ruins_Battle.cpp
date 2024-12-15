@@ -108,6 +108,7 @@ void Room_Ruins_Battle::roomInit() {
 
                         Animation frog = Animation(ResourceManager::getInstance().getResource("FROGGIT"),1,1,1,106,102);
                         bt.press_height = 12;
+                        bt.nbtime = 25;
                         bt.setEnemy("Froggit", 10, 1, { frog,frog,frog}, { 0,0,106,102 });
                         bt.actions = { std::make_pair("²é¿´",[]() {
                             ConversationSequence::getInstance().setSequence(ConvSeq{
