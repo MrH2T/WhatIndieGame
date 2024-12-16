@@ -157,6 +157,7 @@ void Room_Ruins_Home::roomInit() {
                     ConversationSequence::getInstance().setSequence({
                         [=]() {C->beginConversation(Text(L"* 这是我自己烤的派，尽情享用吧！"), torielface); },
                         [=]() {C->beginConversation(Text(L"* 你获得了 派。")); GameManager::getInstance().addItem("派");
+                    GameManager::getInstance().addGold(20);
                     GameManager::getInstance().savingVar["CHAIRIEL_TASK_FINISHED"] = 1; }
                         });
                     ConversationSequence::getInstance().startConversation();

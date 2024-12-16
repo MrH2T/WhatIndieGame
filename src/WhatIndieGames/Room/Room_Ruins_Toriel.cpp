@@ -52,8 +52,8 @@ void Room_Ruins_Toriel::roomInit() {
     addEntity("Portal1", portal1);
     Entity* portal2 = new Entity("Portal2", 640, 500, { 0,0,5,100 }, true);
     portal2->setReaction([&]() {
-        /*GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 1;
-        GameManager::getInstance().setRoom(ROOM_SNOWTOWN);*/
+        GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 0;
+        GameManager::getInstance().setRoom(ROOM_SNOW_TOWN);
         }, 1);
     addEntity("Portal2", portal2);
     Entity* portal3 = new Entity("Portal3", 270, 900, { 0,0,100,5 }, true);

@@ -62,6 +62,23 @@
 #define CHAIRIEL_BMP	 				160
 #define KEY_BMP			 				161
 #define BENCH_BMP		 				162
+#define SNOW_TILESET_BMP				163
+#define RUINS_ENTRANCE_BMP				164
+#define SNOWDIN_LOGO_BMP				165
+#define BG_INN_BMP						166
+#define BG_ROOM_BMP						167
+#define BG_INN_SHOP_BMP					168
+#define BG_SANSROOM_BMP					169
+#define CHRISTMASTREE_BMP				170
+#define INNKEEP_BMP						171
+#define GIFTBEAR_BMP					172
+#define ICECAP_BMP						173
+#define RABBITKID_BMP					174
+#define WRAPMOUSE_BMP					175
+#define SCARFLADY_BMP					176
+#define LIBRARY_BMP						177
+#define BG_LIBRARY_BMP					178
+#define SNOWMAN_BMP						179
 
 
 

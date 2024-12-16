@@ -31,6 +31,20 @@ Room* getRoom(int roomid) {
 		return new Room_Ruins_Puzzle_2();
 	case ROOM_RUINS_SECRET:
 		return new Room_Ruins_Secret();
+	case ROOM_SNOW_TOWN:
+		return new Room_Snow_Town();
+	case ROOM_SNOW_SNOWMAN:
+		return new Room_Snow_Snowman();
+	case ROOM_SNOW_INN:
+		return new Room_Snow_Inn();
+	case ROOM_SNOW_HOUSE:
+		return new Room_Snow_House();
+	case ROOM_SNOW_SANSHOUSE:
+		return new Room_Snow_Sanshouse();
+	case ROOM_SNOW_LIBRARY:
+		return new Room_Snow_Library();
+
+
 		
 	case CUTSCENE_FALLING:
 		return new Cutscene_Falling();

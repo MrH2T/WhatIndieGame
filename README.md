@@ -2,7 +2,8 @@
 
 An RPG Game for the course Fundamental of Programming at Tsinghua University.
 
-Innovation from Undertale, Oneshot and so on.
+Inspiration from Undertale, Oneshot, etc.
 
 ## Libs
 Should with SFML static library.
+

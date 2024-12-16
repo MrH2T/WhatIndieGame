@@ -382,6 +382,24 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("CHAIRIEL", bitmap(CHAIRIEL_BMP));
     rs.loadResource("KEY", bitmap(KEY_BMP));
     rs.loadResource("BENCH", bitmap(BENCH_BMP));
+    rs.loadResource("SNOW_TILESET", bitmap(SNOW_TILESET_BMP));
+    rs.loadResource("RUINS_ENTRANCE", bitmap(RUINS_ENTRANCE_BMP));
+    rs.loadResource("SNOWDIN_LOGO", bitmap(SNOWDIN_LOGO_BMP));
+    rs.loadResource("BG_INN", bitmap(BG_INN_BMP));
+    rs.loadResource("BG_SNOW_ROOM", bitmap(BG_ROOM_BMP));
+    rs.loadResource("BG_INN_SHOP", bitmap(BG_INN_SHOP_BMP));
+    rs.loadResource("BG_SANSROOM", bitmap(BG_SANSROOM_BMP));
+    rs.loadResource("CHRISTMASTREE", bitmap(CHRISTMASTREE_BMP));
+    rs.loadResource("LIBRARY", bitmap(LIBRARY_BMP));
+    rs.loadResource("INNKEEP", bitmap(INNKEEP_BMP));
+    rs.loadResource("GIFTBEAR", bitmap(GIFTBEAR_BMP));
+    rs.loadResource("ICECAP", bitmap(ICECAP_BMP));
+    rs.loadResource("WRAPMOUSE", bitmap(WRAPMOUSE_BMP));
+    rs.loadResource("RABBITKID", bitmap(RABBITKID_BMP));
+    rs.loadResource("SCARFLADY", bitmap(SCARFLADY_BMP));
+    rs.loadResource("BG_LIBRARY", bitmap(BG_LIBRARY_BMP));
+    rs.loadResource("SNOWMAN", bitmap(SNOWMAN_BMP));
+
 
     
 #pragma endregion
@@ -647,14 +665,14 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
 
 #pragma region ItemRegistering
     auto& ir = ItemManager::getInstance();
-    ir.registerItem("怪物糖果", Item("怪物糖果", "回复 5 HP", []() {
+    ir.registerItem("怪物糖果", Item("怪物糖果", "回复 3 HP", []() {
         auto& gm = GameManager::getInstance();
-        gm.addHP(5);
+        gm.addHP(3);
         AudioManager::getInstance().playSound("SND_ITEMUSE");
         if (gm.globalVar[GLOBAL_GAME_STATE] == GAME_STATE_BATTLE) {
             auto& conv = Conversation::getInstance();
             ConversationSequence::getInstance().setSequence({
-                [&]() {conv.beginConversation(Text(L"* 恢复了 5 HP.")); },
+                [&]() {conv.beginConversation(Text(L"* 恢复了 3 HP.")); },
                 [&]() {ConversationSequence::getInstance().stopBattleConv(); Battle::getInstance().switchState(BATTLE_DIALOG); }
                 });
             ConversationSequence::getInstance().startBattleConv();
@@ -681,6 +699,19 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
             auto& conv = Conversation::getInstance();
             ConversationSequence::getInstance().setSequence({
                 [&]() {conv.beginConversation(Text(L"* 恢复了 90 HP.")); },
+                [&]() {ConversationSequence::getInstance().stopBattleConv(); Battle::getInstance().switchState(BATTLE_DIALOG); }
+                });
+            ConversationSequence::getInstance().startBattleConv();
+        }
+        }));
+    ir.registerItem("肉桂兔包", Item("肉桂兔包", "回复 10 HP", []() {
+        auto& gm = GameManager::getInstance();
+        gm.addHP(10);
+        AudioManager::getInstance().playSound("SND_ITEMUSE");
+        if (gm.globalVar[GLOBAL_GAME_STATE] == GAME_STATE_BATTLE) {
+            auto& conv = Conversation::getInstance();
+            ConversationSequence::getInstance().setSequence({
+                [&]() {conv.beginConversation(Text(L"* 恢复了 10 HP.")); },
                 [&]() {ConversationSequence::getInstance().stopBattleConv(); Battle::getInstance().switchState(BATTLE_DIALOG); }
                 });
             ConversationSequence::getInstance().startBattleConv();
