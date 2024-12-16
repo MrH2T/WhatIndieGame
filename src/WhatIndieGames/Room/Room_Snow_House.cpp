@@ -36,6 +36,44 @@ void Room_Snow_House::roomInit() {
     addEntity("AirwallRight", airwallRight);
     addEntity("AirwallRight1", airwallRight1);
 
+    Entity* bed = new Entity("Bed", 300, 120, { 5,5,65,95 }, true);
+    bed->setReaction([]() {
+        ConversationSequence::getInstance().setSequence({
+            []() {Conversation::getInstance().beginConversation(Text(L"* 一张很舒服的床")); }
+            });
+        ConversationSequence::getInstance().startConversation();
+        }, 0);
+    addEntity(bed);
+
+    Entity* shelf = new Entity("Shelf", 230, 110, { 5,5,65,35 }, true);
+    shelf->setReaction([]() {
+        ConversationSequence::getInstance().setSequence({
+            []() {Conversation::getInstance().beginConversation(Text(L"* 不应该打开别人的柜子。")); }
+            });
+        ConversationSequence::getInstance().startConversation();
+        }, 0);
+    addEntity(shelf);
+
+    Entity* desk = new Entity("Desk", 150, 100, { 5,5,65,15 }, true);
+    desk->setReaction([]() {
+        ConversationSequence::getInstance().setSequence({
+            []() {Conversation::getInstance().beginConversation(Text(L"* 柜子上放着一些书。")); }
+            });
+        ConversationSequence::getInstance().startConversation();
+        }, 0);
+    addEntity(desk);
+
+    Entity* lamp = new Entity("Lamp", 30, 110, { 5,5,35,35 }, true);
+    lamp->setReaction([]() {
+        ConversationSequence::getInstance().setSequence({
+            []() {Conversation::getInstance().beginConversation(Text(L"* 一台小巧的台灯。")); }
+            });
+        ConversationSequence::getInstance().startConversation();
+        }, 0);
+    addEntity(lamp);
+
+
+
     Entity* portal = new Entity("Portal", 280, 390, { 0,0,100,10 }, true);
     portal->setReaction([&]() {
         GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 4;

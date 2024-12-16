@@ -111,6 +111,12 @@ void Room_Snow_Town::roomInit() {
         Animation(ResourceManager::getInstance().getResource("CHRISTMASTREE"), 1, 1, 1, 64, 85));
     tree->setDrawYPrioBias(100);
     tree->setVisible(1);
+    tree->setReaction([]() {
+        ConversationSequence::getInstance().setSequence({
+            []() {Conversation::getInstance().beginConversation(Text(L"* 树下放着很多礼物。")); }
+            });
+        ConversationSequence::getInstance().startConversation();
+        }, 0);
     addEntity(tree);
 
     Entity* house2 = new Entity("House2", 2000, 240, { 0,100,256,236 }, { 0,0, 256,236 },
@@ -244,6 +250,7 @@ void Room_Snow_Town::roomInit() {
         }, 0);
     addEntity(scarflady);
 
+
     Entity* shop = new Entity("Shop", 900, 470, { 0,0,60,20 },true);
     shop->setReaction([]() {
         ConversationSequence::getInstance().setSequence({
@@ -290,7 +297,7 @@ void Room_Snow_Town::roomInit() {
         GameManager::getInstance().setRoom(ROOM_SNOW_CROSSROADS); }, 1);
     //addEntity(portal2);
 
-    if (GameManager::getInstance().savingVar.find("MOUSE_KEY_FOUND") != GameManager::getInstance().savingVar.end()) {
+    if (true||GameManager::getInstance().savingVar.find("MOUSE_KEY_FOUND") != GameManager::getInstance().savingVar.end()) {
         Entity* portal3 = new Entity("PortalHouse", 1600, 450, { 0,0,60,30 }, true);
         portal3->setReaction([&]() {
         GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 0;
