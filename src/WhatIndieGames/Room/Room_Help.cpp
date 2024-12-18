@@ -67,6 +67,8 @@ void Room_Help::roomInit() {
         GameManager::getInstance().getEntity(ENTITY_MAIN_PLAYER)->setSpeedY(0);
         GameManager::getInstance().updateEntityPositions();
         GameManager::getInstance().globalVar[GLOBAL_BATTLE_PREPARING] = 1;
+        GameManager::getInstance().globalVar[GLOBAL_PLAYER_ATK] = GameManager::getInstance().savingVar[GLOBAL_PLAYER_ATK];
+        GameManager::getInstance().globalVar[GLOBAL_PLAYER_DEF] = GameManager::getInstance().savingVar[GLOBAL_PLAYER_DEF];
         
         GameManager::getInstance().addWaiting([=]() {
 

@@ -65,6 +65,7 @@ void Room::calculateMap(HBITMAP &mp, HBITMAP tiles, int setrows, int setcols, st
 void Room::calculateMap(HBITMAP tiles, int setrows,int setcols,std::vector<std::vector<int>> tile_info,int size) {
 	calculateMap(map, tiles, setrows, setcols, tile_info, size);
 	int rows = tile_info.size(), cols = tile_info[0].size();
+	for (int i = 0; i < rows; i++)cols = std::max(cols, (int)tile_info[i].size());
 	width = cols * TILE_GAME_SIZE;
 	height = rows * TILE_GAME_SIZE;
 }

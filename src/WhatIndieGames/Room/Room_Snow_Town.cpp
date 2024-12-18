@@ -272,8 +272,8 @@ void Room_Snow_Town::roomInit() {
                         else {
                             GameManager::getInstance().addItem("Èâ¹ðÍÃ°ü");
                             GameManager::getInstance().addGold(-7);
+                            ConversationSequence::getInstance().stopConversation();
                         }
-                        ConversationSequence::getInstance().stopConversation();
                     }
                     else if (GameManager::getInstance().globalVar["Choose_Temp"] == 2) {
                             ConversationSequence::getInstance().stopConversation();
@@ -295,9 +295,9 @@ void Room_Snow_Town::roomInit() {
     portal2->setReaction([&]() {
         GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 0;
         GameManager::getInstance().setRoom(ROOM_SNOW_CROSSROADS); }, 1);
-    //addEntity(portal2);
+    addEntity(portal2);
 
-    if (true||GameManager::getInstance().savingVar.find("MOUSE_KEY_FOUND") != GameManager::getInstance().savingVar.end()) {
+    if (GameManager::getInstance().savingVar.find("MOUSE_KEY_FOUND") != GameManager::getInstance().savingVar.end()) {
         Entity* portal3 = new Entity("PortalHouse", 1600, 450, { 0,0,60,30 }, true);
         portal3->setReaction([&]() {
         GameManager::getInstance().globalVar[ROOM_ENTRANCE] = 0;

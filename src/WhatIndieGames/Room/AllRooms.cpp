@@ -43,9 +43,21 @@ Room* getRoom(int roomid) {
 		return new Room_Snow_Sanshouse();
 	case ROOM_SNOW_LIBRARY:
 		return new Room_Snow_Library();
+	case ROOM_SNOW_CROSSROADS:
+		return new Room_Snow_Crossroads();
+	case ROOM_SNOW_BRIDGE:
+		return new Room_Snow_Bridge();
+	case ROOM_HOT_ENTRANCE:
+		return new Room_Hot_Entrance();
+	case ROOM_LAB_TALK:
+		return new Room_Lab_Talk();
+	case ROOM_LAB_FIGHT:
+		return new Room_Lab_Fight();
+	case ROOM_PORTAL:
+		return new Room_Portal();
+	case ROOM_FINAL:
+		return new Room_Final();
 
-
-		
 	case CUTSCENE_FALLING:
 		return new Cutscene_Falling();
 	}

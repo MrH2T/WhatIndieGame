@@ -399,6 +399,16 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("SCARFLADY", bitmap(SCARFLADY_BMP));
     rs.loadResource("BG_LIBRARY", bitmap(BG_LIBRARY_BMP));
     rs.loadResource("SNOWMAN", bitmap(SNOWMAN_BMP));
+    rs.loadResource("HOT_TILESET", bitmap(HOT_TILES_BMP));
+    rs.loadResource("LAB_ENTRANCE", bitmap(LAB_ENTRANCE_BMP));
+    rs.loadResource("UNDYNE", bitmap(UNDYNE_BMP));
+    rs.loadResource("ALPHYS_IMAGES", bitmap(ALPHYS_BMP));
+    rs.loadResource("LAB_TILESET", bitmap(LAB_TILESET_BMP));
+    rs.loadResource("TRUELAB_TILESET", bitmap(TRUELAB_TILESET_BMP));
+    rs.loadResource("LABTV", bitmap(LABTV_BMP));
+    rs.loadResource("ALPHYSTOOLS", bitmap(ALPHYSTOOLS_BMP));
+    rs.loadResource("ALPHYSTABLE", bitmap(ALPHYSTABLE_BMP));
+    rs.loadResource("ALPHYS_FACE", bitmap(ALPHYSFACE_BMP));
 
 
     
@@ -423,6 +433,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("SND_TORIEL_SPEAK", "Resource/Audio/snd_toriel_speak.wav", 1);
     am.loadAudio("SND_FALL_LAND", "Resource/Audio/snd_fall_land.wav", 1);
     am.loadAudio("SND_FALLING", "Resource/Audio/snd_falling.wav", 1);
+    am.loadAudio("SND_ALPHYS_SPEAK", "Resource/Audio/snd_alphys_speak.wav", 1);
 
     am.loadAudio("BGM_SANS", "Resource/Audio/bgm_sans.wav");
     am.loadAudio("BGM_SNOWTOWN", "Resource/Audio/bgm_snowtown.wav");
@@ -435,6 +446,12 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("BGM_HOME", "Resource/Audio/bgm_home.ogg");
     am.loadAudio("BGM_HOTSPRING", "Resource/Audio/bgm_hotspring.ogg");
     am.loadAudio("BGM_MEGALOVANIA", "Resource/Audio/bgm_megalovania.ogg");
+    am.loadAudio("BGM_SNOW", "Resource/Audio/bgm_snow.ogg");
+    am.loadAudio("BGM_HOT", "Resource/Audio/bgm_hot.ogg");
+    am.loadAudio("BGM_LAB", "Resource/Audio/bgm_lab.ogg");
+    am.loadAudio("BGM_UNDYNE", "Resource/Audio/bgm_undyne.ogg");
+    am.loadAudio("BGM_FINALBOSS", "Resource/Audio/bgm_finalboss.ogg");
+    am.loadAudio("BGM_FINALBOSS_2", "Resource/Audio/bgm_finalboss_2.mp3");
 
 #pragma endregion
 

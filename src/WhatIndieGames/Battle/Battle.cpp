@@ -553,7 +553,7 @@ void Battle::switchState(int st) {
 void Battle::causeDamage(int dm) {
 	if (curAttack.curTime - localVar["LAST_HURT"] <= nbtime)return;
 	localVar["LAST_HURT"] = curAttack.curTime;
-	int realDamage = std::max(1, dm-GameManager::getInstance().savingVar[GLOBAL_PLAYER_DEF]);
+	int realDamage = std::max(1, dm-GameManager::getInstance().globalVar[GLOBAL_PLAYER_DEF]);
 	GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] = std::max(0,
 		GameManager::getInstance().globalVar[GLOBAL_PLAYER_HP] - realDamage);
 	Canvas::getInstance().getObject(PLAYER_DRAWOBJ).anim = player_anims[2];
@@ -564,7 +564,7 @@ void Battle::causeDamage(int dm) {
 	checkPlayer();
 }
 int Battle::causeAttack() {
-	int realDamage = std::max(1,GameManager::getInstance().savingVar[GLOBAL_PLAYER_ATK] - enemy_def + rand()%11-5);
+	int realDamage = std::max(1,GameManager::getInstance().globalVar[GLOBAL_PLAYER_ATK] - enemy_def + rand()%11-5);
 	enemy_hp = std::max(0, enemy_hp - realDamage);
 	Canvas::getInstance().getObject(PLAYER_DRAWOBJ).anim = player_anims[1];
 	Canvas::getInstance().getObject(PLAYER_DRAWOBJ).anim.setCurFrame(0);
@@ -640,7 +640,7 @@ void Battle::useAct() {
 		return;
 	}
 	item_func = actions;
-	item_choice = 0;
+	item_choice = inv_page=0;
 	auto& cv = Canvas::getInstance();
 	for (int i = 0; i < 4; i++) {
 		if (i >= item_func.size())break;
@@ -764,7 +764,7 @@ void Battle::drawingUpdate() {
 }
 void Battle::handleChoose() {
 	switchState(BATTLE_DESCRI);
-	item_func[item_choice].second();
+	item_func[item_choice+4*inv_page].second();
 
 }
 int& Battle::battleState() {

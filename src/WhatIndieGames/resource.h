@@ -79,6 +79,16 @@
 #define LIBRARY_BMP						177
 #define BG_LIBRARY_BMP					178
 #define SNOWMAN_BMP						179
+#define HOT_TILES_BMP					180
+#define LAB_ENTRANCE_BMP				181
+#define UNDYNE_BMP						182
+#define ALPHYS_BMP						183
+#define LAB_TILESET_BMP					184
+#define TRUELAB_TILESET_BMP				185
+#define LABTV_BMP						186
+#define ALPHYSTOOLS_BMP					187
+#define ALPHYSTABLE_BMP					188
+#define ALPHYSFACE_BMP					189
 
 
 

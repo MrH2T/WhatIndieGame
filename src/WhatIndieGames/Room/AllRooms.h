@@ -21,15 +21,16 @@
 
 #define ROOM_SNOW_TOWN 11
 #define ROOM_SNOW_CROSSROADS 12
-#define ROOM_SNOW_PLAIN 13
+#define ROOM_SNOW_PLAIN 13	//todo
 #define ROOM_SNOW_INN 21
 #define ROOM_SNOW_HOUSE 22
 #define ROOM_SNOW_SANSHOUSE 23
 #define ROOM_SNOW_LIBRARY 24
 #define ROOM_SNOW_SNOWMAN 25
-#define ROOM_FIRE_CORRIDOR 14
-#define ROOM_WATER_BATTLE 15
-#define ROOM_WATER_BOSS 16
+#define ROOM_SNOW_BRIDGE 26
+#define ROOM_HOT_ENTRANCE 14
+#define ROOM_WATER_BATTLE 15 // abandon
+#define ROOM_WATER_BOSS 16	//abandon
 #define ROOM_LAB_TALK 17
 #define ROOM_LAB_FIGHT 18
 #define ROOM_PORTAL 19
@@ -181,6 +182,48 @@ class Room_Snow_Snowman :public Room {
 public:
 	Room_Snow_Snowman();
 	~Room_Snow_Snowman();
+	virtual void roomInit();
+};
+class Room_Snow_Crossroads :public Room {
+public:
+	Room_Snow_Crossroads();
+	~Room_Snow_Crossroads();
+	virtual void roomInit();
+};
+class Room_Hot_Entrance :public Room {
+public:
+	Room_Hot_Entrance();
+	~Room_Hot_Entrance();
+	virtual void roomInit();
+};
+class Room_Snow_Bridge : public Room {
+public:
+	Room_Snow_Bridge();
+	~Room_Snow_Bridge();
+	virtual void roomInit();
+};
+class Room_Lab_Talk :public Room {
+public:
+	Room_Lab_Talk();
+	~Room_Lab_Talk();
+	virtual void roomInit();
+};
+class Room_Lab_Fight :public Room {
+public:
+	Room_Lab_Fight();
+	~Room_Lab_Fight();
+	virtual void roomInit();
+};
+class Room_Portal :public Room {
+public:
+	Room_Portal();
+	~Room_Portal();
+	virtual void roomInit();
+};
+class Room_Final :public Room {
+public:
+	Room_Final();
+	~Room_Final();
 	virtual void roomInit();
 };
 

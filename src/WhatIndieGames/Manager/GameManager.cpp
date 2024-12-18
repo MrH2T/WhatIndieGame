@@ -192,12 +192,12 @@ void GameManager::addHP(int v) {
 void GameManager::addEXP(int v) {
 	int& exp =savingVar[GLOBAL_PLAYER_EXP];
 	exp+= v;
-	if (exp >= 100)savingVar[GLOBAL_PLAYER_LV] = 5;
-	else if (exp >= 80)savingVar[GLOBAL_PLAYER_LV] = 4;
-	else if (exp >= 60)savingVar[GLOBAL_PLAYER_LV] = 3;
-	else if (exp >= 30)savingVar[GLOBAL_PLAYER_LV] = 2;
-	else if (exp >= 10)savingVar[GLOBAL_PLAYER_LV] = 1;
-	else savingVar[GLOBAL_PLAYER_LV] = 0;
+	if (exp >= 100)savingVar[GLOBAL_PLAYER_LV] = 5, savingVar[GLOBAL_PLAYER_MAXHP] = 70, savingVar[GLOBAL_PLAYER_ATK] = 20;
+	else if (exp >= 80)savingVar[GLOBAL_PLAYER_LV] = 4, savingVar[GLOBAL_PLAYER_MAXHP] = 60, savingVar[GLOBAL_PLAYER_ATK] = 17;
+	else if (exp >= 60)savingVar[GLOBAL_PLAYER_LV] = 3, savingVar[GLOBAL_PLAYER_MAXHP] = 50, savingVar[GLOBAL_PLAYER_ATK] = 12;
+	else if (exp >= 30)savingVar[GLOBAL_PLAYER_LV] = 2, savingVar[GLOBAL_PLAYER_MAXHP] = 40, savingVar[GLOBAL_PLAYER_ATK] = 8;
+	else if (exp >= 10)savingVar[GLOBAL_PLAYER_LV] = 1, savingVar[GLOBAL_PLAYER_MAXHP] = 30, savingVar[GLOBAL_PLAYER_ATK] = 5;
+	else savingVar[GLOBAL_PLAYER_LV] = 0, savingVar[GLOBAL_PLAYER_MAXHP] = 20, savingVar[GLOBAL_PLAYER_ATK] = 2;
 }
 void GameManager::addGold(int v) {
 	savingVar[GLOBAL_PLAYER_GOLD] += v;
@@ -293,6 +293,8 @@ void GameManager::gameOver() {
 }
 void GameManager::goMainMenu() {
 	AudioManager::getInstance().stopBgm();
+
+	globalVar[ROOM_ENTRANCE] = 0;
 	setRoom(ROOM_MAINMENU,GAME_STATE_MAINMENU);
 }
 void GameManager::newGame() {
@@ -306,6 +308,7 @@ void GameManager::newGame() {
 	savingVar[GLOBAL_PLAYER_LV] = 0;
 	savingVar[GLOBAL_KILLS] = 0;
 	
+	globalVar[ROOM_ENTRANCE] = 0;
 	setRoom(ROOM_FIRST);
 }
 
@@ -319,6 +322,8 @@ void GameManager::helpRoom() {
 	savingVar[GLOBAL_PLAYER_EXP] = 0;
 	savingVar[GLOBAL_PLAYER_LV] = 0;
 
+
+	globalVar[ROOM_ENTRANCE] = 0;
 	setRoom(ROOM_HELP);
 }
 void GameManager::gameEscape() {
