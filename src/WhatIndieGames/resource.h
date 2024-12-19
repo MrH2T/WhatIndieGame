@@ -89,6 +89,8 @@
 #define ALPHYSTOOLS_BMP					187
 #define ALPHYSTABLE_BMP					188
 #define ALPHYSFACE_BMP					189
+#define FINAL_COLORS_BMP				190
+#define FINALROOM_BMP					191
 
 
 

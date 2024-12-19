@@ -41,6 +41,7 @@
 #define ROOM_WATER_SECRET 103
 
 #define CUTSCENE_FALLING 201
+#define CUTSCENE_CAST 202
 
 
 
@@ -226,7 +227,13 @@ public:
 	~Room_Final();
 	virtual void roomInit();
 };
-
+class Cutscene_Cast : public Room {
+public :
+	Cutscene_Cast();
+	~Cutscene_Cast();
+	virtual void roomInit();
+	virtual void roomUpdate();
+};
 
 
 Room* getRoom(int roomid);

@@ -409,6 +409,8 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     rs.loadResource("ALPHYSTOOLS", bitmap(ALPHYSTOOLS_BMP));
     rs.loadResource("ALPHYSTABLE", bitmap(ALPHYSTABLE_BMP));
     rs.loadResource("ALPHYS_FACE", bitmap(ALPHYSFACE_BMP));
+    rs.loadResource("FINAL_COLORS", bitmap(FINAL_COLORS_BMP));
+    rs.loadResource("FINALROOM", bitmap(FINALROOM_BMP));
 
 
     
@@ -434,6 +436,7 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("SND_FALL_LAND", "Resource/Audio/snd_fall_land.wav", 1);
     am.loadAudio("SND_FALLING", "Resource/Audio/snd_falling.wav", 1);
     am.loadAudio("SND_ALPHYS_SPEAK", "Resource/Audio/snd_alphys_speak.wav", 1);
+    am.loadAudio("SND_USEPORTAL", "Resource/Audio/snd_useportal.ogg", 1);
 
     am.loadAudio("BGM_SANS", "Resource/Audio/bgm_sans.wav");
     am.loadAudio("BGM_SNOWTOWN", "Resource/Audio/bgm_snowtown.wav");
@@ -452,13 +455,15 @@ void initGame(HWND hWnd, WPARAM wParam, LPARAM lParam) {
     am.loadAudio("BGM_UNDYNE", "Resource/Audio/bgm_undyne.ogg");
     am.loadAudio("BGM_FINALBOSS", "Resource/Audio/bgm_finalboss.ogg");
     am.loadAudio("BGM_FINALBOSS_2", "Resource/Audio/bgm_finalboss_2.mp3");
+    am.loadAudio("BGM_PORTAL", "Resource/Audio/bgm_portal.ogg");
+    am.loadAudio("BGM_CAST", "Resource/Audio/bgm_cast.ogg");
 
 #pragma endregion
 
     auto& cv = Canvas::getInstance();
     auto& ev = EventManager::getInstance();
 
-    cv.addObject("Debug", DrawableObject(Text(L""), 0, 0, {0,0,300,200}, 10, DRAW_ABSOLUTE|DRAW_VISIBLE ));
+    cv.addObject("Debug", DrawableObject(Text(L""), 0, 0, {0,0,300,200}, 10, DRAW_ABSOLUTE|!DRAW_VISIBLE ));
     //EventManager::getInstance().subscribe("V_PRESS", "dbg", []() {GameManager::getInstance().setRoom(ROOM_RUINS_TORIEL); });
 
 

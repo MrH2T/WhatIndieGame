@@ -115,7 +115,7 @@ void Room_Lab_Fight::roomInit() {
                     })
                     };
 
-
+                    bt.localVar["LASTATK"] = -1;
 
                     bt.mercible = [&]() {
                         return false;
@@ -173,6 +173,18 @@ void Room_Lab_Fight::roomInit() {
 
                                     Battle::Attack atk[9] = {
                                         Battle::Attack({
+                                              {10,Bul(1,10,0,dm)},{18,Bul(2,10,1,dm)},{26,Bul(3,10,2,dm)},{34,Bul(4,10,1,dm)},
+                                               {42,Bul(5,10,0,dm)},{50,Bul(6,10,1,dm)},{58,Bul(7,10,2,dm)},{66,Bul(8,10,1,dm)},
+                                               {74,Bul(9,10,0,dm)},{82,Bul(10,10,1,dm)},{90,Bul(11,10,2,dm)},{98,Bul(12,10,1,dm)},
+                                               {106,Bul(13,10,0,dm)},{114,Bul(14,10,1,dm)},{122,Bul(15,10,2,dm)},{130,Bul(16,10,1,dm)},
+                                                 {138,Bul(17,10,0,dm)}
+                                        }),
+                                           Battle::Attack({
+                                              {10,Bul(1,10,0,dm,320)},{26,Bul(2,10,2,dm)},{34,Bul(3,10,2,dm)},{42,Bul(4,10,2,dm)},
+                                               {50,Bul(5,10,2,dm,320)},{66,Bul(6,10,0,dm)},{74,Bul(7,10,0,dm)},{82,Bul(8,10,0,dm)},
+                                               {90,Bul(9,10,0,dm,400)},{106,Bul(10,10,2,dm,40)},{114,Bul(11,10,2,dm,40)},{122,Bul(12,10,2,dm,40)},
+                                               {138,Bul(13,10,2,dm,400)},{154,Bul(14,10,0,dm,40)},{162,Bul(15,10,0,dm,40)},{170,Bul(16,10,0,dm,40)}
+                                        }),Battle::Attack({
                                             {10 + 8 * (1 - 1),Bul(1,10,rand() % 3,dm)},{10 + 8 * (2 - 1),Bul(2,10,rand() % 3,dm)},{10 + 8 * (3 - 1),Bul(3,10,rand() % 3,dm)},
                                             {10 + 8 * (4 - 1),Bul(4,10,rand() % 3,dm)},{10 + 8 * (5 - 1),Bul(5,10,rand() % 3,dm)},{10 + 8 * (6 - 1),Bul(6,10,rand() % 3,dm)},
                                             {10 + 8 * (7 - 1),Bul(7,10,rand() % 3,dm)},{10 + 8 * (8 - 1),Bul(8,10,rand() % 3,dm)},{10 + 8 * (9 - 1),Bul(9,10,rand() % 3,dm)},
@@ -183,18 +195,6 @@ void Room_Lab_Fight::roomInit() {
                                             {10 + 8 * (22 - 1),Bul(22,10,rand() % 3,dm)},{10 + 8 * (23 - 1),Bul(23,10,rand() % 3,dm)},{10 + 8 * (24 - 1),Bul(24,10,rand() % 3,dm)},
                                             {10 + 8 * (25 - 1),Bul(25,10,rand() % 3,dm)},{10 + 8 * (26 - 1),Bul(26,10,rand() % 3,dm)},{10 + 8 * (27 - 1),Bul(27,10,rand() % 3,dm)},
                                             {10 + 8 * (28 - 1),Bul(28,10,rand() % 3,dm)},{10 + 8 * (29 - 1),Bul(29,10,rand() % 3,dm)},{10 + 8 * (30 - 1),Bul(30,10,rand() % 3,dm)}
-                                        }),
-                                           Battle::Attack({
-                                              {10,Bul(1,10,0,dm,320)},{26,Bul(2,10,2,dm)},{34,Bul(3,10,2,dm)},{42,Bul(4,10,2,dm)},
-                                               {50,Bul(5,10,2,dm,320)},{66,Bul(6,10,0,dm)},{74,Bul(7,10,0,dm)},{82,Bul(8,10,0,dm)},
-                                               {90,Bul(9,10,0,dm,400)},{106,Bul(10,10,2,dm,40)},{114,Bul(11,10,2,dm,40)},{122,Bul(12,10,2,dm,40)},
-                                               {138,Bul(13,10,2,dm,400)},{154,Bul(14,10,0,dm,40)},{162,Bul(15,10,0,dm,40)},{170,Bul(16,10,0,dm,40)}
-                                        }),Battle::Attack({
-                                              {10,Bul(1,10,0,dm)},{18,Bul(2,10,1,dm)},{26,Bul(3,10,2,dm)},{34,Bul(4,10,1,dm)},
-                                               {42,Bul(5,10,0,dm)},{50,Bul(6,10,1,dm)},{58,Bul(7,10,2,dm)},{66,Bul(8,10,1,dm)},
-                                               {74,Bul(9,10,0,dm)},{82,Bul(10,10,1,dm)},{90,Bul(11,10,2,dm)},{98,Bul(12,10,1,dm)},
-                                               {106,Bul(13,10,0,dm)},{114,Bul(14,10,1,dm)},{122,Bul(15,10,2,dm)},{130,Bul(16,10,1,dm)},
-                                                 {138,Bul(17,10,0,dm)}
                                         }),bul3,
                                             Battle::Attack({
                                                 {10,Bul(1,10,0,dm,560)},{10,Bul(2,10,1,dm)},{18,Bul(3,10,2,dm)},{26,Bul(4,10,1,dm)},{34,Bul(5,10,2,dm)},{42,Bul(6,10,1,dm)},
@@ -211,19 +211,85 @@ void Room_Lab_Fight::roomInit() {
                                                 {178 + 72,Bul(32,10,2,dm,10,chgLine(32,150,160,2,rand() % 2))},{186 + 72,Bul(33,10,2,dm,10,chgLine(33,150,160,2,rand() % 2))},
                                                 {194 + 72,Bul(34,10,2,dm,10,chgLine(34,150,160,2,rand() % 2))},{202 + 72,Bul(35,10,2,dm,10,chgLine(35,150,160,2,rand() % 2))},
                                                 {210 + 72,Bul(36,10,2,dm,10,chgLine(36,150,160,2,rand() % 2))},
-                                        })
+                                        }),
                                         //TODO
-
+                                            Battle::Attack({
+                                {10,Bul(1,10,0,dm)},{10,Bul(2,10,1,dm)},{18,Bul(3,10,0,dm)},{18,Bul(4,10,1,dm)},{26,Bul(5,10,1,dm)},{26,Bul(6,10,2,dm)},
+                                {34,Bul(7,10,1,dm)},{34,Bul(8,10,2,dm)},{42,Bul(9,10,0,dm)},{42,Bul(10,10,2,dm)}, { 50,Bul(11,10,0,dm) },{50,Bul(12,10,2,dm)},
+                                {58,Bul(13,10,0,dm)},{58,Bul(14,10,1,dm)},{66,Bul(15,10,1,dm)},{66,Bul(16,10,2,dm)},
+                                {80,Bul(17,10,1,dm,320)},{100,Bul(18,10,0,dm)},{105,Bul(19,10,0,dm)},{110,Bul(20,10,0,dm)},
+                                {125,Bul(21,10,1,dm,320)},{145,Bul(22,10,2,dm)},{150,Bul(23,10,2,dm)},{155,Bul(24,10,2,dm)}
+                                }),
+                            Battle::Attack({
+                                {10,Bul(1,5,0,dm)}, { 20,Bul(2,5,1,dm) },{ 30,Bul(3,5,2,dm) },{ 40,Bul(4,10,0,dm) },{ 50,Bul(5,10,1,dm) },{ 60,Bul(6,10,2,dm) },
+                                {50,Bul(7,5,2,dm)}, { 60,Bul(8,5,1,dm) },{ 70,Bul(9,5,0,dm) },{ 80,Bul(10,10,2,dm) },{ 90,Bul(11,10,1,dm) },{ 100,Bul(12,10,0,dm) },
+                                { 115,Bul(13,10,0,dm,100) },{125,Bul(14,10,1,dm)},{135,Bul(15,10,2,dm)},
+                                {135,Bul(16,10,1,dm,100)},{145,Bul(17,10,0,dm)}
+                                }),
+                            Battle::Attack({
+                                {10,Bul(1,10,1,dm,1000)},{15,Bul(2,10,1,dm,10,chgLine(2,100,110,1,0))},{23,Bul(3,10,1,dm,10,chgLine(3,100,110,1,0))},
+                                {24,Bul(4,10,1,dm,10,chgLine(4,100,110,1,2))},{30,Bul(5,10,1,dm,10,chgLine(5,200,210,1,2))},
+                                {38,Bul(6,10,1,dm,10,chgLine(6,200,210,1,0))},{45,Bul(7,10,1,dm,10,chgLine(7,200,210,1,2))},
+                                {51,Bul(8,10,1,dm,10,chgLine(8,150,160,1,2))},{60,Bul(9,10,0,dm,10)},{66,Bul(10,10,2,dm,10)},
+                                {74,Bul(11,10,2,dm,10,chgLine(11,150,160,2,0))},{85,Bul(12,10,0,dm,10,chgLine(12,170,180,0,2))},
+                                {95,Bul(13,10,0,dm,150)},{95,Bul(14,10,2,dm,150)}
+                                }),
+                            Battle::Attack({
+                                {10,Bul(1,2,1,15,10,2)},
+                                {10,Bul(2,10,0,dm)},{14,Bul(3,10,1,dm)},{18,Bul(4,10,2,dm)},{22,Bul(5,10,0,dm)},{26,Bul(6,10,1,dm)},{30,Bul(7,10,2,dm)},
+                                {34,Bul(8,10,0,dm)},{38,Bul(9,10,1,dm,20)},{42,Bul(10,10,2,dm)},{46,Bul(11,10,0,dm,20)},{50,Bul(12,10,1,dm)},{54,Bul(13,10,2,dm)},
+                                {58,Bul(14,10,0,dm)},{62,Bul(15,10,1,dm)},{66,Bul(16,10,2,dm,20)},
+                                {72,Bul(17,10,2,dm,20)},{76,Bul(18,10,1,dm,40)},{80,Bul(19,10,0,dm,20)},{84,Bul(20,10,2,dm,40)},{88,Bul(21,10,1,dm,20)},{92,Bul(22,10,0,dm,20)},
+                                {96,Bul(23,10,2,dm,20)},{100,Bul(24,10,1,dm,20)},{104,Bul(25,10,0,dm,40)},
+                                {108,Bul(50,10,2,dm)},
+                                {110,Bul(26,10,0,dm)},{112,Bul(27,10,2,dm)},{114,Bul(28,10,0,dm)},{116,Bul(29,10,2,dm)},{118,Bul(30,10,0,dm)},{120,Bul(31,10,2,dm)},
+                                {122,Bul(32,10,0,dm)},{124,Bul(33,10,2,dm)},{126,Bul(34,10,0,dm)},{128,Bul(35,10,2,dm)},{130,Bul(36,10,0,dm)},{132,Bul(37,10,2,dm)},
+                                {134,Bul(38,10,0,dm)},{136,Bul(39,10,2,dm)},{138,Bul(40,10,0,dm)},{140,Bul(41,10,2,dm)},{142,Bul(42,10,0,dm)},{144,Bul(43,10,2,dm)},
+                                {146,Bul(44,10,0,dm)},{148,Bul(45,10,2,dm)},{150,Bul(46,10,0,dm)},{152,Bul(47,10,2,dm)},{154,Bul(48,10,0,dm)},{156,Bul(49,10,2,dm)}
+                                }),
                                     };
+                                    std::vector<int> possible;
+                                    possible.clear();
                                     if (bt.enemy_hp <= 30) {
-                                        bt.setAttack(atk[rand() % 6+3]);
+                                        for (int _ = 0; _ < 5; _++)possible.push_back(3);
+                                        for (int _ = 0; _ < 10; _++)possible.push_back(4);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(5);
+                                        for (int _ = 0; _ < 30; _++)possible.push_back(6);
+                                        for (int _ = 0; _ < 40; _++)possible.push_back(7);
+                                        for (int _ = 0; _ < 40; _++)possible.push_back(8);
                                     }
                                     else  if (bt.enemy_hp <= 60) {
-                                        bt.setAttack(atk[rand() % 9]);
+                                        for (int _ = 0; _ < 5; _++)possible.push_back(0);
+                                        for (int _ = 0; _ < 5; _++)possible.push_back(1);
+                                        for (int _ = 0; _ < 5; _++)possible.push_back(2);
+                                        for (int _ = 0; _ < 5; _++)possible.push_back(3);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(4);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(5);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(6);
+                                        for (int _ = 0; _ < 30; _++)possible.push_back(7);
+                                        for (int _ = 0; _ < 30; _++)possible.push_back(8);
                                     }
-                                    else if (bt.enemy_hp <= 130)bt.setAttack(atk[rand() % 7]);
-                                    else bt.setAttack(atk[rand() % 4]);
-                                    bt.setAttack(atk[4]);
+                                    else if (bt.enemy_hp <= 130) {
+                                        for (int _ = 0; _ < 10; _++)possible.push_back(0);
+                                        for (int _ = 0; _ < 10; _++)possible.push_back(1);
+                                        for (int _ = 0; _ < 10; _++)possible.push_back(2);
+                                        for (int _ = 0; _ < 10; _++)possible.push_back(3);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(4);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(5);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(6);
+                                    }
+                                    else {
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(0);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(1);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(2);
+                                        for (int _ = 0; _ < 20; _++)possible.push_back(3);
+                                    }
+
+
+                                    int choose = possible[rand() % possible.size()];
+                                    while (choose == bt.localVar["LASTATK"])choose = possible[rand() % possible.size()];
+                                    bt.localVar["LASTATK"] = choose;
+                                    bt.setAttack(atk[choose]);
 
                                 Battle::getInstance().switchState(BATTLE_BULLET);
                                 Battle::getInstance().runAttack();

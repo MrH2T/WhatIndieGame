@@ -60,6 +60,8 @@ Room* getRoom(int roomid) {
 
 	case CUTSCENE_FALLING:
 		return new Cutscene_Falling();
+	case CUTSCENE_CAST:
+		return new Cutscene_Cast();
 	}
 	
 	return NULL;
